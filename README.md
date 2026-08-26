@@ -46,7 +46,7 @@ CypoMap solves that by providing:
 <h2>Who Created CypoMap</h2>
 
 <p>
-<strong>Gary</strong><br>
+<strong>Gary Morton (M1GRY)</strong><br>
 A radio amateur and homebrew electronics enthusiast who wanted a practical, reliable mapping tool for Cyprus POTA activations.
 </p>
 
@@ -89,7 +89,7 @@ README.md         → this file
 <h2>Licence</h2>
 
 <p>
-CypoMap is released under the <strong>MIT Licence</strong>, meaning:
+CypoMap is released under the <strong>GPL V3 Licence</strong>, meaning:
 </p>
 
 <ul>
