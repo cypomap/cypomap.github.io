@@ -1,0 +1,630 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-001",
+        "summitName": "Chionistra",
+        "altM": 1950,
+        "altFt": 6397,
+        "points": 10,
+        "bonusPoints": 3,
+        "activationCount": 35
+      },
+      "geometry": { "type": "Point", "coordinates": [32.8644, 34.9364] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-002",
+        "summitName": "Madari",
+        "altM": 1613,
+        "altFt": 5291,
+        "points": 10,
+        "bonusPoints": 3,
+        "activationCount": 25
+      },
+      "geometry": { "type": "Point", "coordinates": [32.9946, 34.9549] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-003",
+        "summitName": "Papoutsa",
+        "altM": 1554,
+        "altFt": 5098,
+        "points": 10,
+        "bonusPoints": 3,
+        "activationCount": 15
+      },
+      "geometry": { "type": "Point", "coordinates": [33.0586, 34.8997] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-004",
+        "summitName": "Kionia",
+        "altM": 1416,
+        "altFt": 4645,
+        "points": 10,
+        "bonusPoints": 3,
+        "activationCount": 6
+      },
+      "geometry": { "type": "Point", "coordinates": [33.1922, 34.9203] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-005",
+        "summitName": "Moutti tis Tremethousaras",
+        "altM": 1407,
+        "altFt": 4616,
+        "points": 10,
+        "bonusPoints": 3,
+        "activationCount": 10
+      },
+      "geometry": { "type": "Point", "coordinates": [32.6808, 34.9947] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-006",
+        "summitName": "Moutti tous Chillinides",
+        "altM": 1395,
+        "altFt": 4576,
+        "points": 10,
+        "bonusPoints": 3,
+        "activationCount": 5
+      },
+      "geometry": { "type": "Point", "coordinates": [33.1489, 34.9081] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-007",
+        "summitName": "Throni",
+        "altM": 1317,
+        "altFt": 4320,
+        "points": 10,
+        "bonusPoints": 3,
+        "activationCount": 15
+      },
+      "geometry": { "type": "Point", "coordinates": [32.7311, 34.9828] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-008",
+        "summitName": "Kokkinokremmos",
+        "altM": 1246,
+        "altFt": 4087,
+        "points": 8,
+        "bonusPoints": 0,
+        "activationCount": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [32.7378, 34.955] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-009",
+        "summitName": "Moutti tis Zacharous",
+        "altM": 1212,
+        "altFt": 3976,
+        "points": 8,
+        "bonusPoints": 0,
+        "activationCount": 4
+      },
+      "geometry": { "type": "Point", "coordinates": [32.6214, 35.0478] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-010",
+        "summitName": "Mavrogenis",
+        "altM": 1189,
+        "altFt": 3900,
+        "points": 8,
+        "bonusPoints": 0,
+        "activationCount": 4
+      },
+      "geometry": { "type": "Point", "coordinates": [32.7622, 34.9708] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-011",
+        "summitName": "Moutti tis Lakeris",
+        "altM": 1164,
+        "altFt": 3818,
+        "points": 8,
+        "bonusPoints": 0,
+        "activationCount": 4
+      },
+      "geometry": { "type": "Point", "coordinates": [33.1083, 34.9469] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-012",
+        "summitName": "Moutti tou Afami",
+        "altM": 1153,
+        "altFt": 3782,
+        "points": 8,
+        "bonusPoints": 0,
+        "activationCount": 7
+      },
+      "geometry": { "type": "Point", "coordinates": [32.8408, 34.8517] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-013",
+        "summitName": "Profitis Elias",
+        "altM": 1147,
+        "altFt": 3763,
+        "points": 8,
+        "bonusPoints": 0,
+        "activationCount": 7
+      },
+      "geometry": { "type": "Point", "coordinates": [32.6331, 34.9042] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-014",
+        "summitName": "Sella",
+        "altM": 1089,
+        "altFt": 3572,
+        "points": 6,
+        "bonusPoints": 0,
+        "activationCount": 4
+      },
+      "geometry": { "type": "Point", "coordinates": [32.7836, 34.8625] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-015",
+        "summitName": "Moutti tis Papadias",
+        "altM": 1076,
+        "altFt": 3530,
+        "points": 6,
+        "bonusPoints": 0,
+        "activationCount": 3
+      },
+      "geometry": { "type": "Point", "coordinates": [32.7353, 35.0233] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-016",
+        "summitName": "Moutti tous Anemous",
+        "altM": 1044,
+        "altFt": 3425,
+        "points": 6,
+        "bonusPoints": 0,
+        "activationCount": 2
+      },
+      "geometry": { "type": "Point", "coordinates": [32.6413, 34.9476] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-017",
+        "summitName": "5B/CY-017",
+        "altM": 1011,
+        "altFt": 3316,
+        "points": 6,
+        "bonusPoints": 0,
+        "activationCount": 8
+      },
+      "geometry": { "type": "Point", "coordinates": [33.0456, 34.8222] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-018",
+        "summitName": "Moutti tous Fitillous",
+        "altM": 987,
+        "altFt": 3238,
+        "points": 6,
+        "bonusPoints": 0,
+        "activationCount": 3
+      },
+      "geometry": { "type": "Point", "coordinates": [32.6358, 35.0817] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-019",
+        "summitName": "Kalogyria",
+        "altM": 986,
+        "altFt": 3234,
+        "points": 6,
+        "bonusPoints": 0,
+        "activationCount": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [32.6097, 34.9664] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-020",
+        "summitName": "Moutti tou Tragouna",
+        "altM": 964,
+        "altFt": 3162,
+        "points": 6,
+        "bonusPoints": 0,
+        "activationCount": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [32.7317, 35.0839] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-021",
+        "summitName": "Zalakas",
+        "altM": 932,
+        "altFt": 3057,
+        "points": 6,
+        "bonusPoints": 0,
+        "activationCount": 6
+      },
+      "geometry": { "type": "Point", "coordinates": [32.9294, 34.8475] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-022",
+        "summitName": "Chalazis",
+        "altM": 924,
+        "altFt": 3031,
+        "points": 6,
+        "bonusPoints": 0,
+        "activationCount": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [33.1144, 34.9794] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-023",
+        "summitName": "Khondrovounaros",
+        "altM": 895,
+        "altFt": 2936,
+        "points": 4,
+        "bonusPoints": 0,
+        "activationCount": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [32.555, 35.0694] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-024",
+        "summitName": "Karramoudi",
+        "altM": 878,
+        "altFt": 2880,
+        "points": 4,
+        "bonusPoints": 0,
+        "activationCount": 3
+      },
+      "geometry": { "type": "Point", "coordinates": [32.7033, 34.8678] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-025",
+        "summitName": "Moutti tou Dia",
+        "altM": 858,
+        "altFt": 2814,
+        "points": 4,
+        "bonusPoints": 0,
+        "activationCount": 3
+      },
+      "geometry": { "type": "Point", "coordinates": [33.0031, 34.8381] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-026",
+        "summitName": "Moutti tou Chareri",
+        "altM": 851,
+        "altFt": 2791,
+        "points": 4,
+        "bonusPoints": 0,
+        "activationCount": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [32.6792, 35.0753] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-027",
+        "summitName": "Moutti tou Khondrou",
+        "altM": 793,
+        "altFt": 2601,
+        "points": 4,
+        "bonusPoints": 0,
+        "activationCount": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [32.7708, 35.0856] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-028",
+        "summitName": "Sinoas",
+        "altM": 789,
+        "altFt": 2588,
+        "points": 4,
+        "bonusPoints": 0,
+        "activationCount": 10
+      },
+      "geometry": { "type": "Point", "coordinates": [33.1744, 34.8058] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-029",
+        "summitName": "Tophoulia",
+        "altM": 776,
+        "altFt": 2545,
+        "points": 4,
+        "bonusPoints": 0,
+        "activationCount": 13
+      },
+      "geometry": { "type": "Point", "coordinates": [32.7872, 34.7825] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-030",
+        "summitName": "Monastron",
+        "altM": 771,
+        "altFt": 2529,
+        "points": 4,
+        "bonusPoints": 0,
+        "activationCount": 4
+      },
+      "geometry": { "type": "Point", "coordinates": [32.6723, 34.8149] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-031",
+        "summitName": "Rock Dhora",
+        "altM": 741,
+        "altFt": 2431,
+        "points": 4,
+        "bonusPoints": 0,
+        "activationCount": 12
+      },
+      "geometry": { "type": "Point", "coordinates": [32.7288, 34.7758] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-032",
+        "summitName": "Mosfileri",
+        "altM": 734,
+        "altFt": 2408,
+        "points": 4,
+        "bonusPoints": 0,
+        "activationCount": 9
+      },
+      "geometry": { "type": "Point", "coordinates": [32.9761, 34.8022] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-033",
+        "summitName": "Vouni",
+        "altM": 704,
+        "altFt": 2309,
+        "points": 4,
+        "bonusPoints": 0,
+        "activationCount": 6
+      },
+      "geometry": { "type": "Point", "coordinates": [32.5525, 34.9314] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-034",
+        "summitName": "Atomoutti",
+        "altM": 687,
+        "altFt": 2253,
+        "points": 2,
+        "bonusPoints": 0,
+        "activationCount": 3
+      },
+      "geometry": { "type": "Point", "coordinates": [33.3144, 34.9214] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-035",
+        "summitName": "Mazi",
+        "altM": 683,
+        "altFt": 2240,
+        "points": 2,
+        "bonusPoints": 0,
+        "activationCount": 12
+      },
+      "geometry": { "type": "Point", "coordinates": [32.4391, 34.8958] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-036",
+        "summitName": "Pachia Moutti",
+        "altM": 683,
+        "altFt": 2240,
+        "points": 2,
+        "bonusPoints": 0,
+        "activationCount": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [32.5481, 35.0] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-037",
+        "summitName": "Stavrovouni",
+        "altM": 677,
+        "altFt": 2221,
+        "points": 2,
+        "bonusPoints": 0,
+        "activationCount": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [33.4353, 34.8858] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-038",
+        "summitName": "Alestos",
+        "altM": 677,
+        "altFt": 2221,
+        "points": 2,
+        "bonusPoints": 0,
+        "activationCount": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [33.0225, 35.0331] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-039",
+        "summitName": "Mersinia",
+        "altM": 677,
+        "altFt": 2221,
+        "points": 2,
+        "bonusPoints": 0,
+        "activationCount": 9
+      },
+      "geometry": { "type": "Point", "coordinates": [32.8308, 34.7669] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-040",
+        "summitName": "Koumana",
+        "altM": 667,
+        "altFt": 2188,
+        "points": 2,
+        "bonusPoints": 0,
+        "activationCount": 5
+      },
+      "geometry": { "type": "Point", "coordinates": [33.0242, 34.7869] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-041",
+        "summitName": "Moutti tou Lorovounou",
+        "altM": 662,
+        "altFt": 2171,
+        "points": 2,
+        "bonusPoints": 0,
+        "activationCount": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [32.5972, 35.1439] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-042",
+        "summitName": "5B/CY-042",
+        "altM": 640,
+        "altFt": 2099,
+        "points": 2,
+        "bonusPoints": 0,
+        "activationCount": 14
+      },
+      "geometry": { "type": "Point", "coordinates": [32.4539, 34.8581] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-043",
+        "summitName": "Kreatos",
+        "altM": 617,
+        "altFt": 2024,
+        "points": 2,
+        "bonusPoints": 0,
+        "activationCount": 4
+      },
+      "geometry": { "type": "Point", "coordinates": [33.1397, 35.0472] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-044",
+        "summitName": "Xylias",
+        "altM": 610,
+        "altFt": 2001,
+        "points": 2,
+        "bonusPoints": 0,
+        "activationCount": 7
+      },
+      "geometry": { "type": "Point", "coordinates": [33.3772, 34.9369] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-045",
+        "summitName": "Kokkinovouppos",
+        "altM": 495,
+        "altFt": 1624,
+        "points": 1,
+        "bonusPoints": 0,
+        "activationCount": 3
+      },
+      "geometry": { "type": "Point", "coordinates": [32.4839, 35.0092] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-046",
+        "summitName": "Pipis",
+        "altM": 472,
+        "altFt": 1548,
+        "points": 1,
+        "bonusPoints": 0,
+        "activationCount": 15
+      },
+      "geometry": { "type": "Point", "coordinates": [33.4283, 34.9361] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-047",
+        "summitName": "Neon appidhaki",
+        "altM": 417,
+        "altFt": 1368,
+        "points": 1,
+        "bonusPoints": 0,
+        "activationCount": 7
+      },
+      "geometry": { "type": "Point", "coordinates": [33.4606, 34.9328] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "summitCode": "5B/CY-048",
+        "summitName": "Korfi",
+        "altM": 382,
+        "altFt": 1253,
+        "points": 1,
+        "bonusPoints": 0,
+        "activationCount": 3
+      },
+      "geometry": { "type": "Point", "coordinates": [33.0981, 34.7428] }
+    }
+  ]
+}
+
