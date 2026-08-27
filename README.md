@@ -1,4 +1,4 @@
-<h1>CypoMap — Cyprus POTA (SOTA and LLOTA coming soon) Interactive Map</h1>
+<h1>CypoMap — Cyprus POTA and SOTA Interactive Map</h1>
 
 <p>
 CypoMap is an interactive mapping tool designed for radio amateurs, hikers, and explorers who want clear, accurate, and practical boundary information for <strong>Cyprus POTA (Parks on the Air)</strong> locations and <strong>Natura 2000</strong> protected areas.
@@ -10,10 +10,10 @@ It provides a fast, lightweight, mobile‑friendly map showing:
 
 <ul>
   <li>All Cyprus POTA parks</li>
-  <li>Natura 2000 boundaries</li>
+  <li>All Cyprus SOTA sites</li>
+  <li>McDonalds(tm) sites for refreshment</li>
   <li>Colour‑coded POTA markers</li>
   <li>Click‑to‑highlight park boundaries</li>
-  <li>MultiPolygon support</li>
   <li>Easy visibility of roads, paths, and access points</li>
   <li>GeoJSON‑driven boundary shading and highlighting</li>
 </ul>
@@ -78,9 +78,9 @@ Together, we built a clean, maintainable, and field‑ready mapping tool.
 <pre>
 index.html        → main webpage
 map.js            → all map logic
-geojson/          → boundary files
+geojson/          → park boundary files in GeoJson format
 cypomap.html      → alternate/test page
-LICENSE           → MIT licence
+LICENSE           → GPL V3 licence
 README.md         → this file
 </pre>
 
