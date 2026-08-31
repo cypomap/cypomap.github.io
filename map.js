@@ -1,18 +1,21 @@
 
 // created by Gary Morton with help from Microsoft Copilot
 // V3.00 - 26-Aug-2026
+// V11.0 - 31-Aug-2026
 
 //////////////////////
 // CONSTANTS & DATA //
 //////////////////////
 
-const COLOR_DEFAULT         = "#ffd700";
-const COLOR_ATNO            = "#0000aa";
-const COLOR_NATURA          = "#99ff99";
-const COLOR_SCENIC_TRAIL    = "#66ccff";
-const COLOR_NATIONAL_FOREST = "#228B22";
-const COLOR_ARCHEOLOGICAL   = "#888888";
-const COLOR_HIGHLIGHT       = "#ff0066";
+const COLOUR_DEFAULT         = "#ffd700";
+const COLOUR_ATNO            = "#0000aa";
+const COLOUR_NATURA          = "#99ff99";
+const COLOUR_SCENIC_TRAIL    = "#66ccff";
+const COLOUR_NATIONAL_FOREST = "#228B22";
+const COLOUR_ARCHEOLOGICAL   = "#888888";
+const COLOUR_HIGHLIGHT       = "#ff0066";
+const COLOUR_ACTIVATED       = "#FFFFFF";
+const COLOUR_ILLEGAL         = "#ff0000";  
 
 const cyprusBounds = [
     [34.45, 32.15],
@@ -145,7 +148,7 @@ const map = L.map('map', {
 
 L.tileLayer(
     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
-    { attribution: 'Tiles © Esri — Source: Esri, USGS, NOAA' }
+    { attribution: 'Tiles © Esri | Source: Esri, USGS, NOAA' }
 ).addTo(map);
 
 // Make POTA layers visible by default
@@ -163,88 +166,373 @@ let highlightMode = "exclusive";
 // All highlight polygons go here
 const highlightLayerGroup = L.layerGroup().addTo(map);
 
-////////////////////
-// ATNO CONTROL   //
-////////////////////
 
+/////////////////////////////////
+// BOOLEAN HIGHLIGHT OPTIONS   //
+/////////////////////////////////
+
+let showActivated = false;
+let showUnactivated = false;
+let highlightActivated = false;
 let highlightATNO = false;
 
-const ATNOControl = L.Control.extend({
+const PotaFilterControl = L.Control.extend({
     options: { position: 'topright' },
 
     onAdd: function () {
+
+        // Create the container
         const container = L.DomUtil.create('div', 'leaflet-control-layers leaflet-control');
 
         container.style.background   = 'white';
-        container.style.padding      = '8px';
-        container.style.borderRadius = '4px';
-        container.style.boxShadow    = '0 0 6px rgba(0,0,0,0.3)';
-
-        container.innerHTML = `
-            <label style="font-size:14px; user-select:none;">
-                <input type="checkbox" id="toggleATNOControl" />
-                Highlight ATNOs
-            </label>
-        `;
-
-        L.DomEvent.disableClickPropagation(container);
-
-        const atnoBox = container.querySelector("#toggleATNOControl");
-        atnoBox.addEventListener("change", (e) => {
-            highlightATNO = e.target.checked;
-            potaRefreshMarkers();
-        });
-
-        return container;
-    }
-});
-
-map.addControl(new ATNOControl());
-
-////////////////////////
-// HIGHLIGHT CONTROL  //
-////////////////////////
-
-const HighlightControl = L.Control.extend({
-    options: { position: 'topright' },
-
-    onAdd: function () {
-        const container = L.DomUtil.create('div', 'leaflet-control-layers leaflet-control');
-
-        container.style.background   = 'white';
-        container.style.padding      = '8px';
+        container.style.padding      = '10px';
         container.style.borderRadius = '4px';
         container.style.boxShadow    = '0 0 6px rgba(0,0,0,0.3)';
         container.style.marginTop    = '6px';
+        container.style.lineHeight   = '1.6';
 
+        // Insert ALL HTML (checkboxes + buttons)
         container.innerHTML = `
-            <label style="font-size:14px; user-select:none;">
-                <input type="checkbox" id="toggleHighlightMode" />
+            <!-- Highlight options -->
+            <label>
+                <input type="checkbox" id="toggleHighlightATNO">
+                Highlight ATNOs
+            </label><br>
+
+            <label>
+                <input type="checkbox" id="toggleHighlightActivated">
+                Highlight Activated
+            </label><br>
+
+            <label>
+                <input type="checkbox" id="toggleShowActivated">
+                Show Activated by me
+            </label><br>
+
+            <label>
+                <input type="checkbox" id="toggleShowUnactivated">
+                Show Unactivated by me
+            </label>
+
+            <!-- Separator -->
+            <div style="border-top:1px solid #ccc; margin:8px 0;"></div>
+
+            <!-- Behaviour mode -->
+            <label>
+                <input type="checkbox" id="toggleAdditiveHighlight">
                 Additive Highlight
             </label>
+
+            <!-- Separator -->
+            <div style="border-top:1px solid #ccc; margin:8px 0;"></div>
+
+            <!-- Import / Export -->
+            <button id="exportActivations" style="margin-bottom:6px;">Export Activations</button><br>
+            <button id="importActivations">Import Activations</button>
         `;
 
+        // Prevent map drag when clicking inside the box
         L.DomEvent.disableClickPropagation(container);
 
-        const box = container.querySelector("#toggleHighlightMode");
-        box.addEventListener("change", (e) => {
+        // Get references to all elements
+        const boxATNO            = container.querySelector("#toggleHighlightATNO");
+        const boxActivatedCol    = container.querySelector("#toggleHighlightActivated");
+        const boxShowActivated   = container.querySelector("#toggleShowActivated");
+        const boxShowUnactivated = container.querySelector("#toggleShowUnactivated");
+        const boxAdditive        = container.querySelector("#toggleAdditiveHighlight");
 
-            highlightMode = e.target.checked ? "additive" : "exclusive";
-            console.log("Highlight mode:", highlightMode);
+        const exportBtn          = container.querySelector("#exportActivations");
+        const importBtn          = container.querySelector("#importActivations");
 
-            // ? NEW BEHAVIOUR ?
-            // When switching back to exclusive mode,
-            // clear all existing highlights immediately.
-            if (highlightMode === "exclusive") {
-                highlightLayerGroup.clearLayers();
+        // --- Checkbox logic ---
+
+        boxATNO.addEventListener("change", () => {
+            highlightATNO = boxATNO.checked;
+            console.log("Highlight ATNOs:", highlightATNO);
+            potaRefreshMarkers();
+        });
+
+        boxActivatedCol.addEventListener("change", () => {
+            highlightActivated = boxActivatedCol.checked;
+            console.log("Highlight Activated:", highlightActivated);
+            potaRefreshMarkers();
+        });
+
+        // Mutually exclusive filters
+        boxShowActivated.addEventListener("change", () => {
+            if (boxShowActivated.checked) {
+                boxShowUnactivated.checked = false;
+                showActivated = true;
+                showUnactivated = false;
+            } else {
+                showActivated = false;
             }
+            console.log("Show Activated:", showActivated);
+            potaRefreshMarkers();
+        });
+
+        boxShowUnactivated.addEventListener("change", () => {
+            if (boxShowUnactivated.checked) {
+                boxShowActivated.checked = false;
+                showUnactivated = true;
+                showActivated = false;
+            } else {
+                showUnactivated = false;
+            }
+            console.log("Show Unactivated:", showUnactivated);
+            potaRefreshMarkers();
+        });
+
+        // Additive highlight mode
+        boxAdditive.addEventListener("change", () => {
+            additiveHighlight = boxAdditive.checked;
+            console.log("Additive Highlight:", additiveHighlight);
+            potaRefreshMarkers();
+        });
+
+        // --- Export logic ---
+        exportBtn.addEventListener("click", () => {
+            const activatedList = JSON.parse(localStorage.getItem("activatedParks") || "[]");
+
+            const blob = new Blob([JSON.stringify(activatedList, null, 2)], {
+                type: "application/json"
+            });
+
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+
+            a.href = url;
+            a.download = "activatedParks.json";
+            a.click();
+
+            URL.revokeObjectURL(url);
+
+            console.log("Exported activations:", activatedList.length);
+        });
+
+        // --- Import logic ---
+        importBtn.addEventListener("click", () => {
+            const input = document.createElement("input");
+            input.type = "file";
+            input.accept = "application/json";
+
+            input.onchange = () => {
+                const file = input.files[0];
+                const reader = new FileReader();
+
+                reader.onload = () => {
+                    try {
+                        const imported = JSON.parse(reader.result);
+
+                        if (!Array.isArray(imported)) {
+                            console.error("Import failed: JSON is not an array.");
+                            alert("Import failed: JSON must be an array of park references.");
+                            return;
+                        }
+
+                        localStorage.setItem("activatedParks", JSON.stringify(imported));
+
+                        console.log("Imported activations:", imported.length);
+                        alert(`Imported ${imported.length} activated parks.`);
+
+                        potaRefreshMarkers();
+                    } catch (err) {
+                        console.error("Import failed:", err);
+                        alert("Import failed: invalid JSON.");
+                    }
+                };
+
+                reader.readAsText(file);
+            };
+
+            input.click();
         });
 
         return container;
     }
 });
 
-map.addControl(new HighlightControl());
+map.addControl(new PotaFilterControl());
+
+///////////////////////////////////
+// (UN)ACTIVATED BY ME CONTROL   //
+///////////////////////////////////
+//-
+//-const ShowActivationFilterControl = L.Control.extend({
+//-    options: { position: 'topright' },
+//-
+//-    onAdd: function () {
+//-        const container = L.DomUtil.create('div', 'leaflet-control-layers leaflet-control');
+//-
+//-        container.style.background   = 'white';
+//-        container.style.padding      = '8px';
+//-        container.style.borderRadius = '4px';
+//-        container.style.boxShadow    = '0 0 6px rgba(0,0,0,0.3)';
+//-        container.style.marginTop    = '6px';
+//-
+//-        container.innerHTML = `
+//-            <label style="font-size:14px; user-select:none;">
+//-                <input type="checkbox" id="toggleShowActivated" />
+//-                Show Activated by me
+//-            </label><br>
+//-            <label style="font-size:14px; user-select:none;">
+//-                <input type="checkbox" id="toggleShowUnactivated" />
+//-                Show Unactivated by me
+//-            </label>
+//-        `;
+//-
+//-        L.DomEvent.disableClickPropagation(container);
+//-
+//-        const boxActivated   = container.querySelector("#toggleShowActivated");
+//-        const boxUnactivated = container.querySelector("#toggleShowUnactivated");
+//-
+//-        boxActivated.addEventListener("change", () => {
+//-            if (boxActivated.checked) {
+//-                boxUnactivated.checked = false;
+//-                showActivated = true;
+//-                showUnactivated = false;
+//-            } else {
+//-                showActivated = false;
+//-            }
+//-            potaRefreshMarkers();
+//-        });
+//-
+//-        boxUnactivated.addEventListener("change", () => {
+//-            if (boxUnactivated.checked) {
+//-                boxActivated.checked = false;
+//-                showUnactivated = true;
+//-                showActivated = false;
+//-            } else {
+//-                showUnactivated = false;
+//-            }
+//-            potaRefreshMarkers();
+//-        });
+//-
+//-        return container;
+//-    }
+//-});
+//-
+//-map.addControl(new ShowActivationFilterControl());
+
+////////////////////
+// ATNO CONTROL   //
+////////////////////
+//-
+//-const ATNOControl = L.Control.extend({
+//-    options: { position: 'topright' },
+//-
+//-    onAdd: function () {
+//-        const container = L.DomUtil.create('div', 'leaflet-control-layers leaflet-control');
+//-
+//-        container.style.background   = 'white';
+//-        container.style.padding      = '8px';
+//-        container.style.borderRadius = '4px';
+//-        container.style.boxShadow    = '0 0 6px rgba(0,0,0,0.3)';
+//-
+//-        container.innerHTML = `
+//-            <label style="font-size:14px; user-select:none;">
+//-                <input type="checkbox" id="toggleATNOControl" />
+//-                Highlight ATNOs
+//-            </label>
+//-        `;
+//-
+//-        L.DomEvent.disableClickPropagation(container);
+//-
+//-        const atnoBox = container.querySelector("#toggleATNOControl");
+//-        atnoBox.addEventListener("change", (e) => {
+//-            highlightATNO = e.target.checked;
+//-            potaRefreshMarkers();
+//-        });
+//-
+//-        return container;
+//-    }
+//-});
+//-
+//-map.addControl(new ATNOControl());
+//-
+//-////////////////////////
+//-// HIGHLIGHT CONTROL  //
+//-////////////////////////
+//-
+//-const HighlightControl = L.Control.extend({
+//-    options: { position: 'topright' },
+//-
+//-    onAdd: function () {
+//-        const container = L.DomUtil.create('div', 'leaflet-control-layers leaflet-control');
+//-
+//-        container.style.background   = 'white';
+//-        container.style.padding      = '8px';
+//-        container.style.borderRadius = '4px';
+//-        container.style.boxShadow    = '0 0 6px rgba(0,0,0,0.3)';
+//-        container.style.marginTop    = '6px';
+//-
+//-        container.innerHTML = `
+//-            <label style="font-size:14px; user-select:none;">
+//-                <input type="checkbox" id="toggleHighlightMode" />
+//-                Additive Highlight
+//-            </label>
+//-        `;
+//-
+//-        L.DomEvent.disableClickPropagation(container);
+//-
+//-        const box = container.querySelector("#toggleHighlightMode");
+//-        box.addEventListener("change", (e) => {
+//-
+//-            highlightMode = e.target.checked ? "additive" : "exclusive";
+//-            console.log("Highlight mode:", highlightMode);
+//-
+//-            // ? NEW BEHAVIOUR ?
+//-            // When switching back to exclusive mode,
+//-            // clear all existing highlights immediately.
+//-            if (highlightMode === "exclusive") {
+//-                highlightLayerGroup.clearLayers();
+//-            }
+//-        });
+//-
+//-        return container;
+//-    }
+//-});
+//-
+//-map.addControl(new HighlightControl());
+
+//////////////////////////////
+// POTA PIN POINT ACTIVATED //
+//////////////////////////////
+//-
+//-const HighlightActivatedControl = L.Control.extend({
+//-    options: { position: 'topright' },
+//-
+//-    onAdd: function () {
+//-        const container = L.DomUtil.create('div', 'leaflet-control-layers leaflet-control');
+//-
+//-        container.style.background   = 'white';
+//-        container.style.padding      = '8px';
+//-        container.style.borderRadius = '4px';
+//-        container.style.boxShadow    = '0 0 6px rgba(0,0,0,0.3)';
+//-        container.style.marginTop    = '6px';
+//-
+//-        container.innerHTML = `
+//-            <label style="font-size:14px; user-select:none;">
+//-                <input type="checkbox" id="toggleHighlightActivated" />
+//-                Highlight Activated
+//-            </label>
+//-        `;
+//-
+//-        L.DomEvent.disableClickPropagation(container);
+//-
+//-        const box = container.querySelector("#toggleHighlightActivated");
+//-        box.addEventListener("change", () => {
+//-            highlightActivated = box.checked;
+//-            potaRefreshMarkers();   // redraw markers with new colours
+//-        });
+//-
+//-        return container;
+//-    }
+//-});
+//-
+//-map.addControl(new HighlightActivatedControl());
+
+
 
 ////////////////////////
 // LAYER CONTROL MENU //
@@ -293,11 +581,11 @@ function makePicnicMarker() {
     });
 }
 
-function makeCircleMarker(color) {
+function makeCircleMarker(colour) {
     const svg = `
         <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
             <circle cx="16" cy="16" r="10"
-                fill="${color}"
+                fill="${colour}"
                 stroke="#333"
                 stroke-width="2" />
         </svg>
@@ -333,36 +621,57 @@ function makeMcdMarker() {
     });
 }
 
+function markActivated(ref) {
+    let list = JSON.parse(localStorage.getItem("activatedParks") || "[]");
+    if (!list.includes(ref)) {
+        list.push(ref);
+        localStorage.setItem("activatedParks", JSON.stringify(list));
+    }
+    potaRefreshMarkers();
+}
+
+function deleteActivated(ref) {
+    let list = JSON.parse(localStorage.getItem("activatedParks") || "[]");
+    list = list.filter(r => r !== ref);
+    localStorage.setItem("activatedParks", JSON.stringify(list));
+    potaRefreshMarkers();
+}
+
 ////////////////////
 // POTA FUNCTIONS //
 ////////////////////
 
 let parks = [];
 
-function potaChooseColor(park) {
+function potaChooseColour(park) {
 
-    if (illegalParks.has(park.reference)) return "red";
+    if (illegalParks.has(park.reference)) return COLOUR_ILLEGAL;
 
-    if (park.qsos === 0 && highlightATNO) return COLOR_ATNO;
+    const activatedList = JSON.parse(localStorage.getItem("activatedParks") || "[]");
+    if (highlightActivated && activatedList.includes(park.reference)) {
+        return COLOUR_ACTIVATED;
+    }
 
-    if (naturaMap[park.reference]) return COLOR_NATURA;
+    if (park.qsos === 0 && highlightATNO) return COLOUR_ATNO;
 
-    if (park.name.includes("Archeological")) return COLOR_ARCHEOLOGICAL;
-    if (park.name.includes("Scenic Trail"))  return COLOR_SCENIC_TRAIL;
-    if (park.name.includes("National Forest")) return COLOR_NATIONAL_FOREST;
-    if (park.name.includes("Forest Reserve")) return COLOR_NATIONAL_FOREST;
+    if (naturaMap[park.reference]) return COLOUR_NATURA;
 
-    return COLOR_DEFAULT;
+    if (park.name.includes("Archeological"))   return COLOUR_ARCHEOLOGICAL;
+    if (park.name.includes("Scenic Trail"))    return COLOUR_SCENIC_TRAIL;
+    if (park.name.includes("National Forest")) return COLOUR_NATIONAL_FOREST;
+    if (park.name.includes("Forest Reserve"))  return COLOUR_NATIONAL_FOREST;
+
+    return COLOUR_DEFAULT;
 }
 
 function potaRestoreBoundary(layer, park) {
     if (!layer) return;
 
-    const color = potaChooseColor(park);
+    const colour = potaChooseColour(park);
 
     layer.setStyle({
-        color,
-        fillColor: color,
+        color: colour,
+        fillColor: colour,
         weight: 2,
         fillOpacity: 0.25
     });
@@ -372,15 +681,15 @@ function potaHighlightBoundary(layer) {
     if (!layer) return;
 
     layer.setStyle({
-        color: COLOR_HIGHLIGHT,
+        color: COLOUR_HIGHLIGHT,
         weight: 4,
         fillOpacity: 0.1
     });
 }
 
-////////////////////////
+/////////////////////////
 // UNIVERSAL HIGHLIGHT //
-////////////////////////
+/////////////////////////
 
 function addHighlight(geoLayer) {
 
@@ -391,7 +700,11 @@ function addHighlight(geoLayer) {
     highlightLayerGroup.addLayer(geoLayer);
 }
 
-function potaLoadAllBoundaries() {
+/////////////////////
+// POTA BOUNDARIES //
+/////////////////////
+
+function loadAllPotaBoundaries() {
 
     for (const potaCode in potaPolygons) {
 
@@ -399,7 +712,7 @@ function potaLoadAllBoundaries() {
         const park = parks.find(p => p.reference === potaCode);
         if (!park || !file) continue;
 
-        const color = potaChooseColor(park);
+        const colour = potaChooseColour(park);
 
         fetch(`./geojson/${file}`)
             .then(r => r.json())
@@ -408,8 +721,8 @@ function potaLoadAllBoundaries() {
                 const poly = L.geoJSON(data, {
                     pane: "overlayPane",
                     style: {
-                        color,
-                        fillColor: color,
+                        color: colour,
+                        fillColor: colour,
                         weight: 2,
                         fillOpacity: 0.25
                     }
@@ -423,16 +736,29 @@ function potaLoadAllBoundaries() {
     }
 }
 
+//////////////////
+// POTA REFRESH //
+//////////////////
+
 function potaRefreshMarkers() {
 
     potaPinsLayer.clearLayers();
+
+    const activatedList = JSON.parse(localStorage.getItem("activatedParks") || "[]");
 
     parks.forEach(park => {
 
         if (!park.latitude || !park.longitude) return;
 
-        const color = potaChooseColor(park);
-        const icon  = makeCircleMarker(color);
+        const isActivated = activatedList.includes(park.reference);
+
+        // --- NEW FILTERING LOGIC ---
+        if (showActivated && !isActivated) return;     // only show activated
+        if (showUnactivated && isActivated) return;    // only show unactivated
+        // --------------------------------
+
+        const colour = potaChooseColour(park);
+        const icon  = makeCircleMarker(colour);
 
         const regionName = regionNames[park.locationDesc] || park.locationDesc || "Unknown";
 
@@ -451,7 +777,14 @@ function potaRefreshMarkers() {
                 ${park.name}<br>
                 Maidenhead : ${park.grid}<br>
                 Region : ${regionName}<br>
-                ${line5}
+                ${line5}<br><br>
+                <div style="display:flex; gap:10px;">
+                    ${
+                        isActivated
+                        ? `<button onclick="deleteActivated('${park.reference}')">Remove Activation</button>`
+                        : `<button onclick="markActivated('${park.reference}')">Mark as Activated</button>`
+                    }
+                </div>
             </div>
         `;
 
@@ -463,18 +796,7 @@ function potaRefreshMarkers() {
     });
 }
 
-//function potaHandleClick(park) {
-//
-//    if (naturaMap[park.reference]) {
-//        highlightNatura2000Boundary(park.reference);
-//    } else {
-//        clearNatura2000Highlight();
-//    }
-//
-//    if (park._polygonLayer) {
-//        potaHighlightBoundary(park._polygonLayer);
-//    }
-//}
+
 function potaHandleClick(park) {
 
     // Natura 2000 highlight (exclusive)
@@ -489,7 +811,7 @@ function potaHandleClick(park) {
     if (park._polygonLayer) {
         const clone = L.geoJSON(park._polygonLayer.toGeoJSON(), {
             style: {
-                color: COLOR_HIGHLIGHT,
+                color: COLOUR_HIGHLIGHT,
                 weight: 4,
                 fillOpacity: 0.1
             }
@@ -497,7 +819,6 @@ function potaHandleClick(park) {
         addHighlight(clone);
     }
 }
-
 
 ////////////////////
 // NATURA 2000    //
@@ -530,19 +851,9 @@ function highlightNatura2000Boundary(potaCode) {
         .then(r => r.json())
         .then(data => {
 
-//            clearNatura2000Highlight();
-//            highlightedBoundary = L.geoJSON(data, {
-//                style: {
-//                    color: COLOR_HIGHLIGHT,
-//                    weight: 4,
-//                    fillOpacity: 0.1
-//                }
-//            }).addTo(map);
-
-
                 const layer = L.geoJSON(data, {
                     style: {
-                        color: COLOR_HIGHLIGHT,
+                        color: COLOUR_HIGHLIGHT,
                         weight: 4,
                         fillOpacity: 0.1
                     }
@@ -572,7 +883,7 @@ function loadAllNaturaBoundaries() {
             .then(data => {
                 L.geoJSON(data, {
                     style: {
-                        color: COLOR_NATURA,
+                        color: COLOUR_NATURA,
                         weight: 2,
                         fillOpacity: 0.2
                     }
@@ -609,6 +920,11 @@ async function picnicSitesLoadMarkers() {
                     <h3>${props.picnicName}</h3>
                     <div><strong>Altitude:</strong> ${props.altitude} m</div>
                     <div><strong>Capacity:</strong> ${props.capacity}</div>
+                    <div>
+                        <a href="https://www.google.com/maps?q=${lat},${lon}" target="_blank">
+                            Open in Google Maps
+                        </a>
+                    </div>
                 </div>
             `;
 
@@ -680,7 +996,7 @@ function sotaZoneLoadLayers() {
 
                         const zoneLayer = L.geoJSON(zoneGeo, {
                             style: {
-                                color: "red",
+                                color: COLOUR_ILLEGAL,
                                 weight: 2,
                                 fillOpacity: 0.15
                             }
@@ -778,7 +1094,7 @@ fetch("https://api.pota.app/program/parks/CY")
 
         potaRefreshMarkers();
         loadAllNaturaBoundaries();
-        potaLoadAllBoundaries();
+        loadAllPotaBoundaries();
         mcdLoadMarkers();
         sotaLoadLayers();
         sotaZoneLoadLayers();
@@ -798,14 +1114,14 @@ legend.onAdd = function (map) {
     div.innerHTML += '<h4>POTA Categories</h4>';
     div.innerHTML += '<small>Creator: M1GRY with CoPilot</small><br>';
     div.innerHTML += '<small>Updated: 31-Aug-2026</small><br>';
-    div.innerHTML += '<small>Version: V10.0</small><br><br>';
+    div.innerHTML += '<small>Version: V11.2</small><br><br>';
 
-    div.innerHTML += '<i style="background: ' + COLOR_ATNO + '"></i> ATNO<br>';
-    div.innerHTML += '<i style="background: ' + COLOR_NATURA + '"></i> Natura 2000<br>';
-    div.innerHTML += '<i style="background: ' + COLOR_SCENIC_TRAIL + '"></i> Scenic Trail<br>';
-    div.innerHTML += '<i style="background: ' + COLOR_NATIONAL_FOREST + '"></i> National Forest<br>';
-    div.innerHTML += '<i style="background: ' + COLOR_ARCHEOLOGICAL + '"></i> Archeological Reserve<br>';
-    div.innerHTML += '<i style="background: ' + COLOR_DEFAULT + '"></i> Other<br>';
+    div.innerHTML += '<i style="background: ' + COLOUR_ATNO + '"></i> ATNO<br>';
+    div.innerHTML += '<i style="background: ' + COLOUR_NATURA + '"></i> Natura 2000<br>';
+    div.innerHTML += '<i style="background: ' + COLOUR_SCENIC_TRAIL + '"></i> Scenic Trail<br>';
+    div.innerHTML += '<i style="background: ' + COLOUR_NATIONAL_FOREST + '"></i> National Forest<br>';
+    div.innerHTML += '<i style="background: ' + COLOUR_ARCHEOLOGICAL + '"></i> Archeological Reserve<br>';
+    div.innerHTML += '<i style="background: ' + COLOUR_DEFAULT + '"></i> Other<br>';
     div.innerHTML += '<i style="background: red"></i> Illegal<br>';
 
     return div;
