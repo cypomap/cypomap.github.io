@@ -1,0 +1,813 @@
+{"type": "FeatureCollection", "features": [
+    { "type": "Feature",
+        "properties": 
+        {
+            "picnicName": "Agia",
+            "altitude": 592,
+            "capacity": 186,
+            "amenities": {
+                "Drinking water": false,
+                "BBQ": true,
+                "Playground": false,
+                "Wheelchair accessible": true
+             }
+         },
+        "geometry": {"type": "Point", "coordinates": [32.625144,34.981059]}
+    },
+
+    { "type": "Feature",
+         "properties": 
+        {
+            "picnicName": "Agia Paraskevi",
+            "altitude": 582,
+            "capacity": 650,
+            "amenities": {
+                "Drinking water": true,
+                "BBQ": true,
+                "Playground": true,
+                "Wheelchair accessible": true
+            }
+        },
+        "geometry": {"type": "Point", "coordinates": [33.009501,34.829879]}
+    },
+
+    { "type": "Feature",
+         "properties": 
+        {
+            "picnicName": "Agia Thekla",
+            "altitude": 224,
+            "capacity": 0,
+            "amenities": {}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.440678,34.946608]}
+    },
+
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Agia Varvara",
+            "altitude": 300,
+            "capacity": 8,
+            "amenities": {"Drinking water": false,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": false}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.759618, 35.088746]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Agioi Anargyroi",
+            "altitude": 37,
+            "capacity": 117,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [34.072079, 34.975182]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Agios Antonios",
+            "altitude": 96,
+            "capacity": 72,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": false}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.967788, 35.009632]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Agios Georgios",
+            "altitude": 157,
+            "capacity": 431,
+            "amenities": {"Drinking water": true,
+            "BBQ": false,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.400426, 35.143909]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Agios Ioannis",
+            "altitude": 1004,
+            "capacity": 0,
+            "amenities": {}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.027238, 34.897432]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Agios Merkourios",
+            "altitude": 260,
+            "capacity": 216,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.54952, 35.031776]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Agios Nikandros",
+            "altitude": 5,
+            "capacity": 125,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.961914, 34.986599]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Agios Thomas",
+            "altitude": 324,
+            "capacity": 0,
+            "amenities": {}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.726334, 34.717593]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Agridia",
+            "altitude": 1091,
+            "capacity": 0,
+            "amenities": {}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.995162, 34.926256]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Akadimia",
+            "altitude": 142,
+            "capacity": 309,
+            "amenities": {"Drinking water": true,
+            "BBQ": false,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.382695, 35.162404]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Alektora",
+            "altitude": 261,
+            "capacity": 0,
+            "amenities": {}
+        },
+        "geometry": {"type": "Point",
+        "coordinates": [32.678749,
+       34.71633]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Almyrolivado",
+            "altitude": 1596,
+            "capacity": 1162,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": false}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.898766, 34.924489]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Alonatzia",
+            "altitude": 868,
+            "capacity": 0,
+            "amenities": {}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.006516, 34.900586]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Archangelou Michael",
+            "altitude": 701,
+            "capacity": 0,
+            "amenities": {}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.161261, 34.809766]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Archangeloudhi",
+            "altitude": 186,
+            "capacity": 0,
+            "amenities": {}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.525342, 35.000676]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Arkolachania",
+            "altitude": 1030,
+            "capacity": 893,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.9056, 34.893922]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Asinou",
+            "altitude": 400,
+            "capacity": 173,
+            "amenities": {"Drinking water": true,
+            "BBQ": false,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.982341, 35.055487]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Athalassa",
+            "altitude": 158,
+            "capacity": 503,
+            "amenities": {"Drinking water": true,
+            "BBQ": false,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.382003, 35.124713]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Dasaki Achnas",
+            "altitude": 53,
+            "capacity": 117,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.768224, 35.025308]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Delikipos",
+            "altitude": 285,
+            "capacity": 177,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.36124, 34.912597]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Dimes",
+            "altitude": 926,
+            "capacity": 0,
+            "amenities": {}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.984148, 34.918571]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Fraktis Prodromou",
+            "altitude": 1580,
+            "capacity": 389,
+            "amenities": {"Drinking water": false,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.842861, 34.947583]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Fraktis Xyliatou",
+            "altitude": 514,
+            "capacity": 642,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.037309, 35.010176]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Gefiri Panagias",
+            "altitude": 452,
+            "capacity": 71,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.08226, 35.017064]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Gefyri tou Livadiou",
+            "altitude": 363,
+            "capacity": 117,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.594283, 35.100951]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Kakomallis",
+            "altitude": 841,
+            "capacity": 419,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.042568, 34.824994]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Kalonomati",
+            "altitude": 435,
+            "capacity": 106,
+            "amenities": {"Drinking water": false,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.74274, 35.073102]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Kampi tou Kaloirou",
+            "altitude": 1328,
+            "capacity": 918,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.832502, 34.926889]} },
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Kampos tou Livadiou",
+            "altitude": 1675,
+            "capacity": 536,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.887734, 34.935497]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Kapoura",
+            "altitude": 221,
+            "capacity": 221,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.005082, 35.011087]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Kavallarkas",
+            "altitude": 1014,
+            "capacity": 0,
+            "amenities": {}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.076283, 34.913196]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Kionia",
+            "altitude": 1220,
+            "capacity": 606,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.197933, 34.920393]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Komititzi",
+            "altitude": 581,
+            "capacity": 214,
+            "amenities": {"Drinking water": false,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": false}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.77457, 34.947292]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Kornos",
+            "altitude": 360,
+            "capacity": 645,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+            },
+        "geometry": {"type": "Point", "coordinates": [33.40101, 34.904879]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Livadi Ppashia",
+            "altitude": 1645,
+            "capacity": 1858,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+            },
+        "geometry": {"type": "Point", "coordinates": [32.898687, 34.935316]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Mantra tou Kampiou",
+            "altitude": 657,
+            "capacity": 1576,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+            },
+        "geometry": {"type": "Point", "coordinates": [33.223498, 34.954034]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Marathos",
+            "altitude": 1282,
+            "capacity": 294,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": false}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.858909, 34.969006]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Mavralis",
+            "altitude": 10,
+            "capacity": 373,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.460966, 35.061132]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Monashilaka",
+            "altitude": 737,
+            "capacity": 507,
+            "amenities": {"Drinking water": false,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.647824, 34.92677]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Oroklini",
+            "altitude": 108,
+            "capacity": 157,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.64601, 34.979741]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Panagia Asprovouniotissa",
+            "altitude": 37,
+            "capacity": 0,
+            "amenities": {}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.879506, 35.056605]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Panagia Evangelistria",
+            "altitude": 19,
+            "capacity": 0,
+            "amenities": {}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.832875, 34.963866]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Panagia Valana",
+            "altitude": 731,
+            "capacity": 0,
+            "amenities": {}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.930508, 34.833438]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Parko ton Ethnon",
+            "altitude": 150,
+            "capacity": 0,
+            "amenities": {"Drinking water": true,
+            "BBQ": false,
+            "Playground": false,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.401346, 35.129519]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Pefkaroudhia",
+            "altitude": 56,
+            "capacity": 0,
+            "amenities": {}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.355724, 34.750745]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Pera Vasa",
+            "altitude": 507,
+            "capacity": 66,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": false}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.731695, 34.89266]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Petra tou Romiou",
+            "altitude": 44,
+            "capacity": 96,
+            "amenities": {"Drinking water": true,
+            "BBQ": false,
+            "Playground": false,
+            "Wheelchair accessible": true}
+            },
+        "geometry": {"type": "Point", "coordinates": [32.605785, 34.674613]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Pikni",
+            "altitude": 377,
+            "capacity": 474,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.371338, 34.895466]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Platania",
+            "altitude": 1120,
+            "capacity": 2299,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.92907, 34.948036]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Polemidia",
+            "altitude": 144,
+            "capacity": 431,
+            "amenities": {"Drinking water": true,
+            "BBQ": false,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.005775, 34.713619]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Profitis Ilias (Kouris Ridge)",
+            "altitude": 668,
+            "capacity": 0,
+            "amenities": {}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.88627, 34.802419]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Rizoelia",
+            "altitude": 104,
+            "capacity": 146,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [33.573007, 34.938809]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Smigies",
+        "    altitude": 267,
+            "capacity": 240,
+            "amenities": {"Drinking water": false,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.333235, 35.023712]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Stavros tis Psokas",
+            "altitude": 806,
+            "capacity": 586,
+            "amenities": {"Drinking water": false,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.630595, 35.024211]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Timi",
+            "altitude": 5,
+            "capacity": 501,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": false}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.490825, 34.707882]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Xerargaka",
+            "altitude": 360,
+            "capacity": 743,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.831988, 35.046702]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Xerokolympos",
+            "altitude": 1334,
+            "capacity": 878,
+            "amenities": {"Drinking water": true,
+            "BBQ": true,
+            "Playground": true,
+            "Wheelchair accessible": true}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.843193, 34.914328]}
+    },
+       
+    { "type": "Feature", 
+      "properties": 
+        {
+            "picnicName": "Xystarouda",
+            "altitude": 924,
+            "capacity": 219,
+            "amenities": {"Drinking water": false,
+            "BBQ": true,
+            "Playground": false,
+            "Wheelchair accessible": false}
+        },
+        "geometry": {"type": "Point", "coordinates": [32.77986, 34.978832]}}
+]}
