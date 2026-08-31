@@ -61,12 +61,46 @@
     /* MOBILE-ONLY LAYOUT TWEAKS */
 @media (max-width: 600px) {
 
-    /* DEBUG: show borders around target elements */
-    .leaflet-control,
+    /* Shrink unified control (your big menu) */
     .leaflet-control-custom,
-    #potaControl,
+    #potaControl {
+        font-size: 14px;
+        padding: 6px;
+        max-width: 160px;
+        line-height: 1.2;
+    }
+
+    /* Tighter checkboxes */
+    #potaControl input[type="checkbox"] {
+        transform: scale(0.9);
+        margin-right: 4px;
+    }
+
+    /* Reduce spacing */
+    #potaControl label,
+    #potaControl button {
+        margin: 3px 0;
+    }
+
+    /* Shrink legend */
     .pota-legend {
-        border: 3px solid red !important;
+        font-size: 12px;
+        padding: 4px;
+        max-width: 140px;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    /* Move attribution so it doesn't collide with legend */
+    .leaflet-control-attribution {
+        bottom: 5px;
+        left: 5px;
+        right: auto;
+    }
+
+    /* Ensure popups appear above legend */
+    .leaflet-popup {
+        z-index: 10000;
     }
 }
 
