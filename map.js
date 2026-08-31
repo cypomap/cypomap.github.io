@@ -124,14 +124,12 @@ const naturaMap = {
 // LAYER GROUPS   //
 ////////////////////
 
-// POTA pins (points)
-const potaPinsLayer      = L.layerGroup();
-// POTA boundaries (polygons + Natura 2000)
-const potaBoundaryLayer  = L.layerGroup();
-// SOTA summits
-const sotaLayer          = L.layerGroup();
-// McDonald's locations
-const mcdLayer           = L.layerGroup();
+const potaPinsLayer           = L.layerGroup(); // POTA boundaries (polygons + Natura 2000)
+const potaBoundaryLayer       = L.layerGroup();
+const sotaLayer               = L.layerGroup(); // SOTA summits
+const sotaActivationZoneLayer = L.layerGroup();
+const mcdLayer                = L.layerGroup(); // McDonald's locations
+const picnicSitesLayer        = L.layerGroup(); // Offical piicnic sites
 
 
 ////////////////////
@@ -152,7 +150,18 @@ L.tileLayer(
 
 // Make POTA layers visible by default
 potaPinsLayer.addTo(map);
-potaBoundaryLayer.addTo(map);
+//potaBoundaryLayer.addTo(map);
+
+////////////////////
+// HIGHLIGHT MODE //
+////////////////////
+
+// "exclusive" = only one highlight at a time
+// "additive"  = multiple highlights stay visible
+let highlightMode = "exclusive";
+
+// All highlight polygons go here
+const highlightLayerGroup = L.layerGroup().addTo(map);
 
 ////////////////////
 // ATNO CONTROL   //
@@ -193,6 +202,51 @@ const ATNOControl = L.Control.extend({
 map.addControl(new ATNOControl());
 
 ////////////////////////
+// HIGHLIGHT CONTROL  //
+////////////////////////
+
+const HighlightControl = L.Control.extend({
+    options: { position: 'topright' },
+
+    onAdd: function () {
+        const container = L.DomUtil.create('div', 'leaflet-control-layers leaflet-control');
+
+        container.style.background   = 'white';
+        container.style.padding      = '8px';
+        container.style.borderRadius = '4px';
+        container.style.boxShadow    = '0 0 6px rgba(0,0,0,0.3)';
+        container.style.marginTop    = '6px';
+
+        container.innerHTML = `
+            <label style="font-size:14px; user-select:none;">
+                <input type="checkbox" id="toggleHighlightMode" />
+                Additive Highlight
+            </label>
+        `;
+
+        L.DomEvent.disableClickPropagation(container);
+
+        const box = container.querySelector("#toggleHighlightMode");
+        box.addEventListener("change", (e) => {
+
+            highlightMode = e.target.checked ? "additive" : "exclusive";
+            console.log("Highlight mode:", highlightMode);
+
+            // ? NEW BEHAVIOUR ?
+            // When switching back to exclusive mode,
+            // clear all existing highlights immediately.
+            if (highlightMode === "exclusive") {
+                highlightLayerGroup.clearLayers();
+            }
+        });
+
+        return container;
+    }
+});
+
+map.addControl(new HighlightControl());
+
+////////////////////////
 // LAYER CONTROL MENU //
 ////////////////////////
 
@@ -200,14 +254,44 @@ const overlays = {
     "POTA Pins": potaPinsLayer,
     "POTA Boundaries": potaBoundaryLayer,
     "SOTA Summits": sotaLayer,
+    "SOTA Activation Zone": sotaActivationZoneLayer,
+    "Picnic Sites": picnicSitesLayer,
     "McDonald's": mcdLayer
 };
 
 L.control.layers(null, overlays).addTo(map);
 
+//sotaActivationZoneLayer.addTo(map);
+
 ////////////////////
 // ICON HELPERS   //
 ////////////////////
+
+function makePicnicMarker() {
+    const svg = `
+        <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 24 24" fill="none"
+             stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+            <!-- Table top -->
+            <path d="M3 10h18" />
+
+            <!-- Left leg -->
+            <path d="M7 10l-4 8" />
+
+            <!-- Right leg -->
+            <path d="M17 10l4 8" />
+
+        </svg>
+    `;
+
+    return L.divIcon({
+        html: svg,
+        className: "",
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+    });
+}
 
 function makeCircleMarker(color) {
     const svg = `
@@ -294,6 +378,19 @@ function potaHighlightBoundary(layer) {
     });
 }
 
+////////////////////////
+// UNIVERSAL HIGHLIGHT //
+////////////////////////
+
+function addHighlight(geoLayer) {
+
+    if (highlightMode === "exclusive") {
+        highlightLayerGroup.clearLayers();
+    }
+
+    highlightLayerGroup.addLayer(geoLayer);
+}
+
 function potaLoadAllBoundaries() {
 
     for (const potaCode in potaPolygons) {
@@ -366,18 +463,41 @@ function potaRefreshMarkers() {
     });
 }
 
+//function potaHandleClick(park) {
+//
+//    if (naturaMap[park.reference]) {
+//        highlightNatura2000Boundary(park.reference);
+//    } else {
+//        clearNatura2000Highlight();
+//    }
+//
+//    if (park._polygonLayer) {
+//        potaHighlightBoundary(park._polygonLayer);
+//    }
+//}
 function potaHandleClick(park) {
 
+    // Natura 2000 highlight (exclusive)
     if (naturaMap[park.reference]) {
+        clearNatura2000Highlight();
         highlightNatura2000Boundary(park.reference);
     } else {
         clearNatura2000Highlight();
     }
 
+    // POTA boundary highlight (exclusive/additive)
     if (park._polygonLayer) {
-        potaHighlightBoundary(park._polygonLayer);
+        const clone = L.geoJSON(park._polygonLayer.toGeoJSON(), {
+            style: {
+                color: COLOR_HIGHLIGHT,
+                weight: 4,
+                fillOpacity: 0.1
+            }
+        });
+        addHighlight(clone);
     }
 }
+
 
 ////////////////////
 // NATURA 2000    //
@@ -409,16 +529,27 @@ function highlightNatura2000Boundary(potaCode) {
     fetch(url)
         .then(r => r.json())
         .then(data => {
-            clearNatura2000Highlight();
 
-            highlightedBoundary = L.geoJSON(data, {
-                style: {
-                    color: COLOR_HIGHLIGHT,
-                    weight: 4,
-                    fillOpacity: 0.1
-                }
-            }).addTo(map);
-        })
+//            clearNatura2000Highlight();
+//            highlightedBoundary = L.geoJSON(data, {
+//                style: {
+//                    color: COLOR_HIGHLIGHT,
+//                    weight: 4,
+//                    fillOpacity: 0.1
+//                }
+//            }).addTo(map);
+
+
+                const layer = L.geoJSON(data, {
+                    style: {
+                        color: COLOR_HIGHLIGHT,
+                        weight: 4,
+                        fillOpacity: 0.1
+                    }
+                });
+    
+                addHighlight(layer);
+            })
         .catch(err => {
             console.error("Failed to highlight boundary for", potaCode, err);
         });
@@ -453,6 +584,47 @@ function loadAllNaturaBoundaries() {
     }
 }
 
+/////////////////////////////
+// PICNIC SITES FUNCTIONS  //
+/////////////////////////////
+
+async function picnicSitesLoadMarkers() {
+
+    const url = "./geojson/picnic-sites.geojson";
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        data.features.forEach(feature => {
+
+            const props = feature.properties;
+            const geom  = feature.geometry;
+
+            const lat = geom.coordinates[1];
+            const lon = geom.coordinates[0];
+
+            const popup = `
+                <div class="popup">
+                    <h3>${props.picnicName}</h3>
+                    <div><strong>Altitude:</strong> ${props.altitude} m</div>
+                    <div><strong>Capacity:</strong> ${props.capacity}</div>
+                </div>
+            `;
+
+            const marker = L.marker([lat, lon], {
+                icon: makePicnicMarker()
+            }).bindPopup(popup);
+
+            picnicSitesLayer.addLayer(marker);
+        });
+
+    } catch (err) {
+        console.error("Failed to load picnic sites:", err);
+    }
+}
+
+
 ////////////////////
 // MCD FUNCTIONS  //
 ////////////////////
@@ -478,6 +650,58 @@ function mcdLoadMarkers() {
 // SOTA FUNCTIONS //
 ////////////////////
 
+function sotaZoneLoadLayers() {
+
+    console.log("SOTA Zones: Starting load…");
+
+    fetch("./geojson/sota.geojson")
+        .then(response => {
+            console.log("SOTA Zones: Fetch response =", response.status);
+            return response.json();
+        })
+        .then(data => {
+
+            console.log("SOTA Zones: Summit file loaded, features =", data.features.length);
+
+            data.features.forEach(feature => {
+
+                const zoneFile = feature.properties.activationZone;
+
+                if (!zoneFile) {
+                    console.log(`SOTA Zones: Summit ${feature.properties.summitCode} has no activation zone.`);
+                    return;
+                }
+
+                console.log(`SOTA Zones: Loading zone for ${feature.properties.summitCode} ? ${zoneFile}`);
+
+                fetch(`./geojson/${zoneFile}`)
+                    .then(r => r.json())
+                    .then(zoneGeo => {
+
+                        const zoneLayer = L.geoJSON(zoneGeo, {
+                            style: {
+                                color: "red",
+                                weight: 2,
+                                fillOpacity: 0.15
+                            }
+                        });
+
+                        sotaActivationZoneLayer.addLayer(zoneLayer);
+
+                        console.log(`SOTA Zones: Added zone for ${feature.properties.summitCode}`);
+                    })
+                    .catch(err => {
+                        console.error(`SOTA Zones: ERROR loading ${zoneFile}`, err);
+                    });
+
+            });
+
+        })
+        .catch(err => {
+            console.error("SOTA Zones: ERROR loading sota.geojson", err);
+        });
+}
+
 function sotaLoadLayers() {
 
     console.log("SOTA: Starting load…");
@@ -499,14 +723,14 @@ function sotaLoadLayers() {
                     return L.marker(latlng, {
                         pane: "markerPane",
                         icon: L.divIcon({
-                                html: `
-                                      <svg width="36" height="36" viewBox="0 0 24 24">
-                                          <polygon points="12,3 3,21 21,21" fill="#555555"
-                                           stroke="white"
-                                           stroke-width="1"
-                                          />
-                                      </svg>
-                                  `,
+                            html: `
+                                <svg width="36" height="36" viewBox="0 0 24 24">
+                                    <polygon points="12,3 3,21 21,21" fill="#555555"
+                                        stroke="white"
+                                        stroke-width="1"
+                                    />
+                                </svg>
+                            `,
                             className: "",
                             iconSize: [36, 36],
                             iconAnchor: [18, 32]
@@ -515,8 +739,10 @@ function sotaLoadLayers() {
                 },
 
                 onEachFeature: function (feature, layer) {
+
                     const p = feature.properties;
 
+                    // Popup ONLY — no shading, no highlighting
                     layer.bindPopup(`
                         <strong>${p.summitName}</strong><br>
                         Code: ${p.summitCode}<br>
@@ -525,6 +751,11 @@ function sotaLoadLayers() {
                         Bonus: ${p.bonusPoints}<br>
                         Activations: ${p.activationCount}
                     `);
+
+                    // Click = popup only
+                    layer.on("click", () => {
+                        layer.openPopup();
+                    });
                 }
             }).addTo(sotaLayer);
 
@@ -550,6 +781,8 @@ fetch("https://api.pota.app/program/parks/CY")
         potaLoadAllBoundaries();
         mcdLoadMarkers();
         sotaLoadLayers();
+        sotaZoneLoadLayers();
+        picnicSitesLoadMarkers();
     })
     .catch(err => console.error("Error loading CY parks:", err));
 
@@ -563,8 +796,9 @@ legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'pota-legend');
 
     div.innerHTML += '<h4>POTA Categories</h4>';
-    div.innerHTML += '<small>Updated: 26-Aug-2026</small><br>';
-    div.innerHTML += '<small>Category Set: V3.01</small><br><br>';
+    div.innerHTML += '<small>Creator: M1GRY with CoPilot</small><br>';
+    div.innerHTML += '<small>Updated: 31-Aug-2026</small><br>';
+    div.innerHTML += '<small>Version: V10.0</small><br><br>';
 
     div.innerHTML += '<i style="background: ' + COLOR_ATNO + '"></i> ATNO<br>';
     div.innerHTML += '<i style="background: ' + COLOR_NATURA + '"></i> Natura 2000<br>';
