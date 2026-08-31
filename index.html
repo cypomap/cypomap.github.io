@@ -58,42 +58,51 @@
     }
 
     /* MOBILE-ONLY LAYOUT TWEAKS */
-    @media (max-width: 600px) {
+@media (max-width: 600px) {
 
-        /* Shrink unified control */
-        .leaflet-control {
-            font-size: 14px;
-            padding: 6px;
-            max-width: 160px;
-            line-height: 1.2;
-        }
-
-        /* Tighter checkboxes */
-        .leaflet-control input[type="checkbox"] {
-            transform: scale(0.9);
-            margin-right: 4px;
-        }
-
-        /* Reduce spacing */
-        .leaflet-control label,
-        .leaflet-control button {
-            margin: 3px 0;
-        }
-
-        /* Shrink legend */
-        .pota-legend {
-            font-size: 12px;
-            padding: 4px;
-            max-width: 140px;
-            bottom: 10px;
-            right: 10px;
-        }
-
-        /* Ensure popups appear above legend */
-        .leaflet-popup {
-            z-index: 10000;
-        }
+    /* Shrink your custom unified control */
+    .leaflet-control-custom,
+    #potaControl {
+        font-size: 14px;
+        padding: 6px;
+        max-width: 160px;
+        line-height: 1.2;
     }
+
+    /* Tighter checkboxes */
+    #potaControl input[type="checkbox"] {
+        transform: scale(0.9);
+        margin-right: 4px;
+    }
+
+    /* Reduce spacing */
+    #potaControl label,
+    #potaControl button {
+        margin: 3px 0;
+    }
+
+    /* Shrink legend */
+    .pota-legend {
+        font-size: 12px;
+        padding: 4px;
+        max-width: 140px;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    /* Move attribution so it doesn't collide */
+    .leaflet-control-attribution {
+        bottom: 5px;
+        left: 5px;
+        right: auto;
+    }
+
+    /* Ensure popups appear above legend */
+    .leaflet-popup {
+        z-index: 10000;
+    }
+}
+
 </style>
 
 </head>
