@@ -1,7 +1,7 @@
 
 // created by Gary Morton with help from Microsoft Copilot
 // V3.00 - 26-Aug-2026
-// V11.0 - 31-Aug-2026
+// V12.0 - 31-Aug-2026
 
 //////////////////////
 // CONSTANTS & DATA //
@@ -353,186 +353,6 @@ const PotaFilterControl = L.Control.extend({
 });
 
 map.addControl(new PotaFilterControl());
-
-///////////////////////////////////
-// (UN)ACTIVATED BY ME CONTROL   //
-///////////////////////////////////
-//-
-//-const ShowActivationFilterControl = L.Control.extend({
-//-    options: { position: 'topright' },
-//-
-//-    onAdd: function () {
-//-        const container = L.DomUtil.create('div', 'leaflet-control-layers leaflet-control');
-//-
-//-        container.style.background   = 'white';
-//-        container.style.padding      = '8px';
-//-        container.style.borderRadius = '4px';
-//-        container.style.boxShadow    = '0 0 6px rgba(0,0,0,0.3)';
-//-        container.style.marginTop    = '6px';
-//-
-//-        container.innerHTML = `
-//-            <label style="font-size:14px; user-select:none;">
-//-                <input type="checkbox" id="toggleShowActivated" />
-//-                Show Activated by me
-//-            </label><br>
-//-            <label style="font-size:14px; user-select:none;">
-//-                <input type="checkbox" id="toggleShowUnactivated" />
-//-                Show Unactivated by me
-//-            </label>
-//-        `;
-//-
-//-        L.DomEvent.disableClickPropagation(container);
-//-
-//-        const boxActivated   = container.querySelector("#toggleShowActivated");
-//-        const boxUnactivated = container.querySelector("#toggleShowUnactivated");
-//-
-//-        boxActivated.addEventListener("change", () => {
-//-            if (boxActivated.checked) {
-//-                boxUnactivated.checked = false;
-//-                showActivated = true;
-//-                showUnactivated = false;
-//-            } else {
-//-                showActivated = false;
-//-            }
-//-            potaRefreshMarkers();
-//-        });
-//-
-//-        boxUnactivated.addEventListener("change", () => {
-//-            if (boxUnactivated.checked) {
-//-                boxActivated.checked = false;
-//-                showUnactivated = true;
-//-                showActivated = false;
-//-            } else {
-//-                showUnactivated = false;
-//-            }
-//-            potaRefreshMarkers();
-//-        });
-//-
-//-        return container;
-//-    }
-//-});
-//-
-//-map.addControl(new ShowActivationFilterControl());
-
-////////////////////
-// ATNO CONTROL   //
-////////////////////
-//-
-//-const ATNOControl = L.Control.extend({
-//-    options: { position: 'topright' },
-//-
-//-    onAdd: function () {
-//-        const container = L.DomUtil.create('div', 'leaflet-control-layers leaflet-control');
-//-
-//-        container.style.background   = 'white';
-//-        container.style.padding      = '8px';
-//-        container.style.borderRadius = '4px';
-//-        container.style.boxShadow    = '0 0 6px rgba(0,0,0,0.3)';
-//-
-//-        container.innerHTML = `
-//-            <label style="font-size:14px; user-select:none;">
-//-                <input type="checkbox" id="toggleATNOControl" />
-//-                Highlight ATNOs
-//-            </label>
-//-        `;
-//-
-//-        L.DomEvent.disableClickPropagation(container);
-//-
-//-        const atnoBox = container.querySelector("#toggleATNOControl");
-//-        atnoBox.addEventListener("change", (e) => {
-//-            highlightATNO = e.target.checked;
-//-            potaRefreshMarkers();
-//-        });
-//-
-//-        return container;
-//-    }
-//-});
-//-
-//-map.addControl(new ATNOControl());
-//-
-//-////////////////////////
-//-// HIGHLIGHT CONTROL  //
-//-////////////////////////
-//-
-//-const HighlightControl = L.Control.extend({
-//-    options: { position: 'topright' },
-//-
-//-    onAdd: function () {
-//-        const container = L.DomUtil.create('div', 'leaflet-control-layers leaflet-control');
-//-
-//-        container.style.background   = 'white';
-//-        container.style.padding      = '8px';
-//-        container.style.borderRadius = '4px';
-//-        container.style.boxShadow    = '0 0 6px rgba(0,0,0,0.3)';
-//-        container.style.marginTop    = '6px';
-//-
-//-        container.innerHTML = `
-//-            <label style="font-size:14px; user-select:none;">
-//-                <input type="checkbox" id="toggleHighlightMode" />
-//-                Additive Highlight
-//-            </label>
-//-        `;
-//-
-//-        L.DomEvent.disableClickPropagation(container);
-//-
-//-        const box = container.querySelector("#toggleHighlightMode");
-//-        box.addEventListener("change", (e) => {
-//-
-//-            highlightMode = e.target.checked ? "additive" : "exclusive";
-//-            console.log("Highlight mode:", highlightMode);
-//-
-//-            // ? NEW BEHAVIOUR ?
-//-            // When switching back to exclusive mode,
-//-            // clear all existing highlights immediately.
-//-            if (highlightMode === "exclusive") {
-//-                highlightLayerGroup.clearLayers();
-//-            }
-//-        });
-//-
-//-        return container;
-//-    }
-//-});
-//-
-//-map.addControl(new HighlightControl());
-
-//////////////////////////////
-// POTA PIN POINT ACTIVATED //
-//////////////////////////////
-//-
-//-const HighlightActivatedControl = L.Control.extend({
-//-    options: { position: 'topright' },
-//-
-//-    onAdd: function () {
-//-        const container = L.DomUtil.create('div', 'leaflet-control-layers leaflet-control');
-//-
-//-        container.style.background   = 'white';
-//-        container.style.padding      = '8px';
-//-        container.style.borderRadius = '4px';
-//-        container.style.boxShadow    = '0 0 6px rgba(0,0,0,0.3)';
-//-        container.style.marginTop    = '6px';
-//-
-//-        container.innerHTML = `
-//-            <label style="font-size:14px; user-select:none;">
-//-                <input type="checkbox" id="toggleHighlightActivated" />
-//-                Highlight Activated
-//-            </label>
-//-        `;
-//-
-//-        L.DomEvent.disableClickPropagation(container);
-//-
-//-        const box = container.querySelector("#toggleHighlightActivated");
-//-        box.addEventListener("change", () => {
-//-            highlightActivated = box.checked;
-//-            potaRefreshMarkers();   // redraw markers with new colours
-//-        });
-//-
-//-        return container;
-//-    }
-//-});
-//-
-//-map.addControl(new HighlightActivatedControl());
-
-
 
 ////////////////////////
 // LAYER CONTROL MENU //
@@ -1111,21 +931,46 @@ var legend = L.control({ position: 'bottomright' });
 legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'pota-legend');
 
-    div.innerHTML += '<h4>POTA Categories</h4>';
-    div.innerHTML += '<small>Creator: M1GRY with CoPilot</small><br>';
-    div.innerHTML += '<small>Updated: 31-Aug-2026</small><br>';
-    div.innerHTML += '<small>Version: V11.2</small><br><br>';
+    // *** REQUIRED: allow clicks to propagate so our collapse handler works
+    L.DomEvent.disableClickPropagation(div);
 
-    div.innerHTML += '<i style="background: ' + COLOUR_ATNO + '"></i> ATNO<br>';
-    div.innerHTML += '<i style="background: ' + COLOUR_NATURA + '"></i> Natura 2000<br>';
-    div.innerHTML += '<i style="background: ' + COLOUR_SCENIC_TRAIL + '"></i> Scenic Trail<br>';
-    div.innerHTML += '<i style="background: ' + COLOUR_NATIONAL_FOREST + '"></i> National Forest<br>';
-    div.innerHTML += '<i style="background: ' + COLOUR_ARCHEOLOGICAL + '"></i> Archeological Reserve<br>';
-    div.innerHTML += '<i style="background: ' + COLOUR_DEFAULT + '"></i> Other<br>';
-    div.innerHTML += '<i style="background: red"></i> Illegal<br>';
+    div.innerHTML = `
+        <div class="legend-header">Legend &#9660;</div>
+        <div class="legend-content">
+            <h4>POTA Categories</h4>
+            <small>Creator: M1GRY with CoPilot</small><br>
+            <small>Updated: 31-Aug-2026</small><br>
+            <small>Version: V12.0</small><br><br>
+
+            <i style="background: ${COLOUR_ATNO}"></i> ATNO<br>
+            <i style="background: ${COLOUR_NATURA}"></i> Natura 2000<br>
+            <i style="background: ${COLOUR_SCENIC_TRAIL}"></i> Scenic Trail<br>
+            <i style="background: ${COLOUR_NATIONAL_FOREST}"></i> National Forest<br>
+            <i style="background: ${COLOUR_ARCHEOLOGICAL}"></i> Archeological Reserve<br>
+            <i style="background: ${COLOUR_DEFAULT}"></i> Other<br>
+            <i style="background: ${COLOUR_ILLEGAL}"></i> Illegal<br>
+        </div>
+    `;
 
     return div;
 };
+    
 
 legend.addTo(map);
+
+
+// *** ADD: collapse behaviour for legend
+document.addEventListener("click", function(e) {
+    if (e.target.classList.contains("legend-header")) {
+        const box = e.target.parentElement;
+        box.classList.toggle("collapsed");
+
+        // Update arrow
+        if (box.classList.contains("collapsed")) {
+            e.target.innerHTML = "Legend &#9650;";   // ? up arrow
+        } else {
+            e.target.innerHTML = "Legend &#9660;";   // ? down arrow
+        }
+    }
+});
 
