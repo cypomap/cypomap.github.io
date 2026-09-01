@@ -2,6 +2,7 @@
 // created by Gary Morton with help from Microsoft Copilot
 // V3.00 - 26-Aug-2026
 // V12.0 - 31-Aug-2026
+// V13.0 - 01-Sep-2026
 
 //////////////////////
 // CONSTANTS & DATA //
@@ -17,10 +18,21 @@ const COLOUR_HIGHLIGHT       = "#ff0066";
 const COLOUR_ACTIVATED       = "#FFFFFF";
 const COLOUR_ILLEGAL         = "#ff0000";  
 
+// A central test coordinate inside Cyprus
+const CYPRUS_TEST_LAT = 34.95;
+const CYPRUS_TEST_LNG = 33.20;
+// --- Cyprus bounding box (WGS84) ---
+const CYPRUS_MIN_LAT = 34.45;
+const CYPRUS_MAX_LAT = 35.85;
+const CYPRUS_MIN_LNG = 32.15;
+const CYPRUS_MAX_LNG = 34.65;
+
 const cyprusBounds = [
-    [34.45, 32.15],
-    [35.85, 34.65]
+    [CYPRUS_MIN_LAT - 0.05, CYPRUS_MIN_LNG - 0.05],
+    [CYPRUS_MAX_LAT + 0.05, CYPRUS_MAX_LNG + 0.05]
 ];
+
+const GPS_ZOOM_LEVEL = 14;
 
 const regionNames = {
     "CY-PA": "Paphos",
@@ -153,7 +165,6 @@ L.tileLayer(
 
 // Make POTA layers visible by default
 potaPinsLayer.addTo(map);
-//potaBoundaryLayer.addTo(map);
 
 ////////////////////
 // HIGHLIGHT MODE //
@@ -189,46 +200,42 @@ const PotaFilterControl = L.Control.extend({
         container.style.borderRadius = '4px';
         container.style.boxShadow    = '0 0 6px rgba(0,0,0,0.3)';
         container.style.marginTop    = '6px';
-        container.style.lineHeight   = '1.6';
+        //container.style.lineHeight   = '1.3';
 
         // Insert ALL HTML (checkboxes + buttons)
         container.innerHTML = `
-            <!-- Highlight options -->
-            <label>
-                <input type="checkbox" id="toggleHighlightATNO">
-                Highlight ATNOs
-            </label><br>
-
-            <label>
-                <input type="checkbox" id="toggleHighlightActivated">
-                Highlight Activated
-            </label><br>
-
-            <label>
-                <input type="checkbox" id="toggleShowActivated">
-                Show Activated by me
-            </label><br>
-
-            <label>
-                <input type="checkbox" id="toggleShowUnactivated">
-                Show Unactivated by me
-            </label>
-
-            <!-- Separator -->
-            <div style="border-top:1px solid #ccc; margin:8px 0;"></div>
-
-            <!-- Behaviour mode -->
-            <label>
-                <input type="checkbox" id="toggleAdditiveHighlight">
-                Additive Highlight
-            </label>
-
-            <!-- Separator -->
-            <div style="border-top:1px solid #ccc; margin:8px 0;"></div>
-
-            <!-- Import / Export -->
-            <button id="exportActivations" style="margin-bottom:6px;">Export Activations</button><br>
-            <button id="importActivations">Import Activations</button>
+        <!-- Entire Options Menu (collapsible) -->
+        <div id="options-menu" class="collapsed">
+        
+            <!-- Header with triangle + Cyprus icon -->
+            <div id="options-header">
+                <span id="options-triangle">&#9662;</span> <!-- down triangle -->
+                Options Menu
+            </div>
+        
+            <!-- Everything collapses -->
+            <div id="options-content">
+        
+                <!-- Highlight Options -->
+                <div class="section-title">Highlight Options</div>
+        
+                <label><input type="checkbox" id="toggleHighlightATNO"> Highlight ATNOs</label><br>
+                <label><input type="checkbox" id="toggleHighlightActivated"> Highlight Activated</label><br>
+                <label><input type="checkbox" id="toggleShowActivated"> Show Activated by me</label><br>
+                <label><input type="checkbox" id="toggleShowUnactivated"> Show Unactivated by me</label>
+        
+                <!-- Modes -->
+                <div class="section-title">Modes</div>
+                <label><input type="checkbox" id="toggleAdditiveHighlight"> Additive Highlight</label>
+        
+                <!-- Import / Export -->
+                <div class="section-title">Import / Export</div>
+        
+                <button id="exportActivations" class="big-button">Export Activations</button><br>
+                <button id="importActivations" class="big-button">Import Activations</button>
+        
+            </div>
+        </div>
         `;
 
         // Prevent map drag when clicking inside the box
@@ -354,6 +361,20 @@ const PotaFilterControl = L.Control.extend({
 
 map.addControl(new PotaFilterControl());
 
+// Collapse/expand entire Options Menu
+document.addEventListener("DOMContentLoaded", () => {
+    const header   = document.getElementById("options-header");
+    const menu     = document.getElementById("options-menu");
+    const triangle = document.getElementById("options-triangle");
+
+    if (header && menu && triangle) {
+        header.addEventListener("click", () => {
+            const collapsed = menu.classList.toggle("collapsed");
+            triangle.innerHTML = collapsed ? "&#9662;" : "&#9652;"; // down / up
+        });
+    }
+});
+
 ////////////////////////
 // LAYER CONTROL MENU //
 ////////////////////////
@@ -368,8 +389,6 @@ const overlays = {
 };
 
 L.control.layers(null, overlays).addTo(map);
-
-//sotaActivationZoneLayer.addTo(map);
 
 ////////////////////
 // ICON HELPERS   //
@@ -935,20 +954,32 @@ legend.onAdd = function (map) {
     L.DomEvent.disableClickPropagation(div);
 
     div.innerHTML = `
-        <div class="legend-header">Legend &#9660;</div>
-        <div class="legend-content">
-            <h4>POTA Categories</h4>
-            <small>Creator: M1GRY with CoPilot</small><br>
-            <small>Updated: 31-Aug-2026</small><br>
-            <small>Version: V12.0</small><br><br>
+        <div id="legend-menu" class="collapsed">
 
-            <i style="background: ${COLOUR_ATNO}"></i> ATNO<br>
-            <i style="background: ${COLOUR_NATURA}"></i> Natura 2000<br>
-            <i style="background: ${COLOUR_SCENIC_TRAIL}"></i> Scenic Trail<br>
-            <i style="background: ${COLOUR_NATIONAL_FOREST}"></i> National Forest<br>
-            <i style="background: ${COLOUR_ARCHEOLOGICAL}"></i> Archeological Reserve<br>
-            <i style="background: ${COLOUR_DEFAULT}"></i> Other<br>
-            <i style="background: ${COLOUR_ILLEGAL}"></i> Illegal<br>
+            <!-- Header -->
+            <div id="legend-header">
+                <span id="legend-triangle">&#9662;</span>
+                Legend
+            </div>
+
+            <div id="legend-content">
+
+                <!-- Section: Credits -->
+                <div class="legend-section-title">Credits</div>
+                    Creator: M1GRY with CoPilot<br>
+                    Updated: 01-Sep-2026<br>
+                    Version: V13.2<br><br>
+
+                <!-- Section: POTA Categories -->
+                <div class="legend-section-title">POTA Categories</div>
+                    <i style="background: ${COLOUR_ATNO}"></i> ATNO<br>
+                    <i style="background: ${COLOUR_NATURA}"></i> Natura 2000<br>
+                    <i style="background: ${COLOUR_SCENIC_TRAIL}"></i> Scenic Trail<br>
+                    <i style="background: ${COLOUR_NATIONAL_FOREST}"></i> National Forest<br>
+                    <i style="background: ${COLOUR_ARCHEOLOGICAL}"></i> Archeological Reserve<br>
+                    <i style="background: ${COLOUR_DEFAULT}"></i> Other<br>
+                    <i style="background: ${COLOUR_ILLEGAL}"></i> Illegal<br>
+            </div>
         </div>
     `;
 
@@ -958,19 +989,144 @@ legend.onAdd = function (map) {
 
 legend.addTo(map);
 
-
-// *** ADD: collapse behaviour for legend
 document.addEventListener("click", function(e) {
-    if (e.target.classList.contains("legend-header")) {
+    if (e.target.id === "legend-header") {
         const box = e.target.parentElement;
         box.classList.toggle("collapsed");
 
         // Update arrow
+        const triangle = e.target.querySelector("#legend-triangle");
         if (box.classList.contains("collapsed")) {
-            e.target.innerHTML = "Legend &#9650;";   // ? up arrow
+            triangle.innerHTML = "&#9652;";   // down arrow
         } else {
-            e.target.innerHTML = "Legend &#9660;";   // ? down arrow
+            triangle.innerHTML = "&#9662;";   // up arrow
         }
     }
+});
+
+////////////////
+// GPS BUTTON //
+////////////////
+
+let locating = false;     // toggle state
+let gpsMarker = null;
+let gpsCircle = null;
+
+function isInsideCyprus(lat, lng) {
+    return (
+        lat >= CYPRUS_MIN_LAT &&
+        lat <= CYPRUS_MAX_LAT &&
+        lng >= CYPRUS_MIN_LNG &&
+        lng <= CYPRUS_MAX_LNG
+    );
+}
+
+function clearGPSMarker() {
+    if (gpsMarker) {
+        map.removeLayer(gpsMarker);
+        gpsMarker = null;
+    }
+    if (gpsCircle) {
+        map.removeLayer(gpsCircle);
+        gpsCircle = null;
+    }
+}
+function showLocateIconColour(link) {
+    link.innerHTML = `
+        <img src="images/locate-target-on.jpg"
+             width="28" height="28"
+             style="display:block;margin:auto;">
+    `;
+}
+
+function showLocateIconBlack(link) {
+    link.innerHTML = `
+        <img src="images/locate-target-off.jpg"
+             width="28" height="28"
+             style="display:block;margin:auto;">
+    `;
+}
+
+const FakeLocateControl = L.Control.extend({
+    options: {
+        position: 'topleft'
+    },
+
+    onAdd: function(map) {
+        const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+        const link = L.DomUtil.create('a', '', container);
+
+        link.href = '#';
+        link.title = 'Locate';
+
+        // initial "off" icon (black cross version)
+        showLocateIconBlack(link);
+
+        L.DomEvent.on(link, 'click', function(e) {
+            L.DomEvent.preventDefault(e);
+            L.DomEvent.stopPropagation(e);
+
+            if (!locating) {
+                // FIRST CLICK ? LOCATE
+                locating = true;
+                showLocateIconColour(link);
+
+                console.log("Fake locate clicked — faking GPS…");
+
+                map.fire('locationfound', {
+                    latlng: L.latLng(CYPRUS_TEST_LAT, CYPRUS_TEST_LNG),
+                    latitude: CYPRUS_TEST_LAT,
+                    longitude: CYPRUS_TEST_LNG,
+                    accuracy: 15
+                });
+
+            } else {
+                // SECOND CLICK ? CLEAR
+                locating = false;
+                clearGPSMarker();
+                showLocateIconBlack(link);
+            }
+        });
+
+        return container;
+    }
+});
+
+
+map.whenReady(() => {
+    map.addControl(new FakeLocateControl());
+});
+
+map.on('locationfound', function(e) {
+
+    // If user clicked the "clear" state, ignore GPS updates
+    if (!locating) { return; }
+
+    let lat = e.latitude;
+    let lng = e.longitude;
+
+    if (!isInsideCyprus(lat, lng)) {
+        console.log("Real GPS outside Cyprus — using fake test coordinate.");
+        lat = CYPRUS_TEST_LAT;
+        lng = CYPRUS_TEST_LNG;
+    } else {
+        console.log("Real GPS inside Cyprus — using genuine coordinates.");
+    }
+
+    // Remove previous marker/circle
+    if (gpsMarker) {
+        map.removeLayer(gpsMarker);
+    }
+    if (gpsCircle) {
+        map.removeLayer(gpsCircle);
+    }
+
+    gpsMarker = L.marker([lat, lng]);
+    gpsCircle = L.circle([lat, lng], { radius: e.accuracy || 15 });
+
+    gpsMarker.addTo(map);
+    gpsCircle.addTo(map);
+
+    map.setView([lat, lng], GPS_ZOOM_LEVEL);
 });
 

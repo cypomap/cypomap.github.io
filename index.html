@@ -4,14 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cyprus POTA Map</title>
-    <!-- Version: 2026-08-31-1 -->
 
     <!-- Leaflet CSS -->
-    <link 
-        rel="stylesheet" 
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        crossorigin=""
-    />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- LocateControl CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
 
 <style>
     html, body {
@@ -34,42 +32,58 @@
         border-bottom: 24px solid #777777; /* dark grey mountain */
     }
     
-    .pota-legend {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 10px 12px;
-        border-radius: 6px;
-        font-size: 14px;
-        line-height: 18px;
-        box-shadow: 0 0 6px rgba(0,0,0,0.3);
-    }
-    
-    .pota-legend h4 {
-        margin: 0 0 6px;
-        font-size: 15px;
-        font-weight: bold;
-    }
-    
-    .pota-legend i {
-        width: 14px;
-        height: 14px;
-        float: left;
-        margin-right: 8px;
-        opacity: 0.9;
-        border-radius: 50%;
-    }
+/* Match width with Options Menu */
+.pota-legend {
+    background: white;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.3);
+    min-width: 180px;   /* matches Options Menu */
+}
 
-    .collapsed .legend-content {
-        display: none;
-    }
+/* Legend header */
+#legend-header {
+    font-weight: bold;
+    font-size: 17px;
+    padding: 6px;
+    cursor: pointer;
+    background: #eee;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+}
 
-    .legend-header {
-        font-weight: bold;
-        padding: 4px;
-        cursor: pointer;
-        background: #eee;
-        border-radius: 4px;
-        margin-bottom: 4px;
-    }
+#legend-triangle {
+    display: inline-block;
+    width: 1em;      /* prevents wobble */
+    text-align: center;
+    font-size: 18px;
+    margin-right: 6px;
+}
+
+/* Collapse behaviour */
+#legend-menu.collapsed #legend-content {
+    display: none;
+}
+
+/* Section titles */
+.legend-section-title {
+    font-weight: bold;
+    margin: 6px 0 4px 0;
+    font-size: 15px;
+}
+
+/* Legend dots */
+.pota-legend i {
+    width: 14px;
+    height: 14px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.9;
+    border-radius: 50%;
+}
+
 
     /* MOBILE-ONLY LAYOUT TWEAKS */
 @media (max-width: 600px) {
@@ -118,7 +132,67 @@
 }
 
 
+/* Options Menu Header */
+#options-header {
+    font-weight: bold;
+    font-size: 17px;
+    padding: 6px;
+    cursor: pointer;
+    background: #eee;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+}
+
+#options-header svg {
+    width: 20px;
+    height: 20px;
+    margin: 0 6px;
+}
+
+#options-triangle {
+    display: inline-block;
+    width: 1em;      /* fixed width prevents wobble */
+    text-align: center;
+    font-size: 18px;
+    margin-right: 6px;
+}
+
+#options-menu {
+    min-width: 180px;
+}
+
+/* Collapse behaviour */
+#options-menu.collapsed #options-content {
+    display: none;
+}
+
+/* Section titles */
+.section-title:first-of-type {
+    margin-top: 10px;   /* restore spacing only for the first section */
+}
+
+.section-title {
+    line-height: 1.2 !important;
+    font-weight: bold;
+    margin: 6px 0 4px 0;
+    font-size: 15px;
+}
+
+/* Mobile-friendly buttons */
+.big-button {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 15px;
+    margin: 8px 0;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+
 </style>
+
 
 </head>
 
@@ -132,9 +206,12 @@
         crossorigin="">
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
+
     <!-- Your map logic -->
     <script src="map.js?v=9999"></script>
 
 </body>
 </html>
+
 
