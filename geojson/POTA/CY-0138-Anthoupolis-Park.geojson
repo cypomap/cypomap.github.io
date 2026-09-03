@@ -1,0 +1,43 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2026-08-26T22:31:35Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1021057039",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              33.2834108,
+              35.1175806
+            ],
+            [
+              33.2839118,
+              35.1173726
+            ],
+            [
+              33.2842258,
+              35.1178786
+            ],
+            [
+              33.2837247,
+              35.1180866
+            ],
+            [
+              33.2834108,
+              35.1175806
+            ]
+          ]
+        ]
+      },
+      "id": "way/1021057039"
+    }
+  ]
+}

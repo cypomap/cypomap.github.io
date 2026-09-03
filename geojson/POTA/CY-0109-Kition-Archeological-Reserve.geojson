@@ -1,0 +1,104 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2026-09-01T22:13:43Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/91295305",
+        "charge": "2.50 EUR",
+        "contact:phone": "+357 24304115",
+        "contact:website": "https://www.culture.gov.cy/dmculture/da/da.nsf/e8af1825026cfe8bc22573e000446396/7a7351cf22898dfec22571a4002ca21c?OpenDocument",
+        "fee": "yes",
+        "historic": "archaeological_site",
+        "historic:civilization": "ancient_greek",
+        "name": "Ancient Kition",
+        "name:lt": "Kition griuvėsiai",
+        "opening_hours": "Apr 16-Sep 15 Mo-Fr 09:30-17:00, Sep 16-Apr 15 Mo-Fr 08:30-16:00",
+        "tourism": "attraction"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              33.629895,
+              34.9238914
+            ],
+            [
+              33.6299218,
+              34.9241462
+            ],
+            [
+              33.6294658,
+              34.9241415
+            ],
+            [
+              33.6294166,
+              34.9231736
+            ],
+            [
+              33.629255,
+              34.923148
+            ],
+            [
+              33.6292392,
+              34.9229331
+            ],
+            [
+              33.6299454,
+              34.9228995
+            ],
+            [
+              33.6299513,
+              34.9227301
+            ],
+            [
+              33.6303962,
+              34.9227372
+            ],
+            [
+              33.6306406,
+              34.922741
+            ],
+            [
+              33.6312629,
+              34.9227509
+            ],
+            [
+              33.6317547,
+              34.9228043
+            ],
+            [
+              33.6313726,
+              34.9231309
+            ],
+            [
+              33.6312986,
+              34.9236218
+            ],
+            [
+              33.6311104,
+              34.9236834
+            ],
+            [
+              33.6306337,
+              34.9237126
+            ],
+            [
+              33.6306452,
+              34.9238647
+            ],
+            [
+              33.629895,
+              34.9238914
+            ]
+          ]
+        ]
+      },
+      "id": "way/91295305"
+    }
+  ]
+}
