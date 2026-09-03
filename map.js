@@ -3,6 +3,8 @@
 // V3.00 - 26-Aug-2026
 // V12.0 - 31-Aug-2026
 // V13.0 - 01-Sep-2026
+// V14.0 - 02-Sep-2026
+// V15.0 - 03-Sep-2026
 
 //////////////////////
 // CONSTANTS & DATA //
@@ -732,7 +734,10 @@ function potaRefreshMarkers() {
 
     parks.forEach(park => {
 
-        if (!park.latitude || !park.longitude) return;
+        const lat = park.latitude;
+        const lon = park.longitude;
+
+        if (!lat || !lon) return;
 
         const isActivated = activatedList.includes(park.reference);
         const isIllegal   = illegalParks.has(park.reference);
@@ -763,25 +768,29 @@ function potaRefreshMarkers() {
                 Maidenhead : ${park.grid}<br>
                 Region : ${regionName}<br>
                 ${line5}<br><br>
-
+        
                 ${
                     isIllegal
-                    ? ""   // illegal ? no activation buttons at all
+                    ? ""   // illegal ? no activation or google buttons
                     : `
-                        <div style="display:flex; gap:10px;">
+                        <div style="display:flex; gap:10px; align-items:center;">
                             ${
                                 isActivated
                                 ? `<button onclick="deleteActivated('${park.reference}')">Remove Activation</button>`
                                 : `<button onclick="markActivated('${park.reference}')">Mark as Activated</button>`
                             }
+        
+                            <button onclick="window.open('https://www.google.com/maps?q=${lat},${lon}', '_blank')">
+                                Google
+                            </button>
                         </div>
                     `
                 }
-
+        
             </div>
         `;
 
-        const marker = L.marker([park.latitude, park.longitude], { icon })
+        const marker = L.marker([lat, lon], { icon })
             .addTo(potaPinsLayer)
             .bindPopup(popupHtml);
 
@@ -1123,7 +1132,7 @@ legend.onAdd = function (map) {
                 <div class="legend-section-title">Credits</div>
                     Creator: M1GRY with CoPilot<br>
                     Updated: 03-Sep-2026<br>
-                    Version: V15.1<br><br>
+                    Version: V15.2<br><br>
 
                 <!-- Section: POTA Categories -->
                 <div class="legend-section-title">POTA Categories</div>
