@@ -68,6 +68,7 @@ const mcdLocations = [
 ];
 
 const potaPolygons = {
+    "CY-0001": "CY-0001-Troodos-UNESCO-Geopark.geojson",
     "CY-0002": "CY-0002-Troodos-National-Forest.geojson",
     "CY-0003": "CY-0003-Rizoelia-National-Forest.geojson",
     "CY-0004": "CY-0004-Polemidia-National-Forest.geojson",
@@ -79,20 +80,78 @@ const potaPolygons = {
     "CY-0010": "CY-0010-Ayios-Nikandros-National-Forest.geojson",
     "CY-0011": "CY-0011-Pedagogiki-Akademia-National-Forest.geojson",
     "CY-0012": "CY-0012-Potamos-Liopetriou-National-Forest.geojson",
+    "CY-0038": "CY-0038-Lara-Toxeftra-Turtle-Reserve-Marine-Protected-Area.geojson",
+    "CY-0040": "CY-0040-Nisia-Marine-area-Marine-Protected-Area.geojson",
+    "CY-0048": "CY-0048-Orites-forest-Protected-Area.geojson",
+    "CY-0049": "CY-0049-Ranti-forest-Protected-Area.geojson",
+    "CY-0050": "CY-0050-Kyparissia-Protected-Area.geojson",
+    "CY-0051": "CY-0051-Makronisos-Protected-Area.geojson",
+    "CY-0052": "CY-0052-Periohi-Kopri-Protected-Area.geojson",
+    "CY-0054": "CY-0054-Geomorfomata-Kathika-Protected-Landscape.geojson",
+    "CY-0055": "CY-0055-Vrahoi-Inias-Protected-Landscape.geojson",
+    "CY-0056": "CY-0056-Androlikou-Kranasi-and-Ambelakia-gorge-Protected-Landscape.geojson",
+    "CY-0057": "CY-0057-Avakas-gorge-Protected-Landscape.geojson",
+    "CY-0058": "CY-0058-Lythrodontas2-Dam-Protected-Landscape.geojson",
+    "CY-0059": "CY-0059-Xyliatos-Dam-Protected-Landscape.geojson",
+    "CY-0102": "CY-0102-Akamas-Botanical-Garden-Ecological-Site.geojson",
+    "CY-0109": "CY-0109-Kition-Archeological-Reserve.geojson",
+    "CY-0119": "CY-0119-Friendship-of-the-Nations-Park.geojson",
+    "CY-0120": "CY-0120-Garyllis-Linear-Park.geojson",
+    "CY-0121": "CY-0121-Limassol-Municipal-Garden-Park.geojson",
+    "CY-0122": "CY-0122-CYTA-Park.geojson",
+    "CY-0125": "CY-0125-Limassol-Molos-Park.geojson",
+    "CY-0123": "CY-0123-Melina-Mercury-Park.geojson",
+    "CY-0124": "CY-0124-Pano-Polemidia-Park.geojson",
+    "CY-0126": "CY-0126-Atlandidos-Park.geojson",
     "CY-0128": "CY-0128-Ayios-Demetrios-Park.geojson",
     "CY-0131": "CY-0131-Metochi-Kykkou-Park.geojson",
     "CY-0132": "CY-0132-Poiiton-kai-Pnevmatikon-Park.geojson",
     "CY-0133": "CY-0133-Ioanni-Hadjipavlou-Park.geojson",
     "CY-0138": "CY-0138-Anthoupolis-Park.geojson",
+    "CY-0143": "CY-0143-Nicosia-Municipal-Garden-Park.geojson",
     "CY-0144": "CY-0144-Pyla-Beach-Park.geojson",
     "CY-0145": "CY-0145-Larnaka-Municipal-Garden-Park.geojson",
     "CY-0146": "CY-0146-Patyxeio-Park.geojson",
     "CY-0149": "CY-0149-Michalaki-Kousoulidi-Community-Park.geojson",
     "CY-0150": "CY-0150-Deftera-Community-Park.geojson",
     "CY-0151": "CY-0151-Andreas-Christou-Community-Park.geojson",
-    "CY-0165": "CY-0165-Pikni-Forest-Reserve.geojson"
+    "CY-0165": "CY-0165-Pikni-Forest-Reserve.geojson",
+    "CY-0169": "CY-0169-Sotira-Forest-National-Park.geojson"
 };
 
+
+////////////
+// TRAILS //
+////////////
+
+const potaTrails = {
+    "CY-0014": "CY-0014-Persephone-Trail.geojson",
+    "CY-0015": "CY-0015-Kalidonia-Waterfalls-Trail.geojson",
+    "CY-0016": "CY-0016-Prodromos-Dam-Stavroulia-Trail.geojson",
+    "CY-0017": "CY-0017-Teisia-tis-Madaris-Trail.geojson",
+    "CY-0018": "CY-0018-Millomeris-Waterfalls-Trail.geojson",
+    "CY-0019": "CY-0019-Artemis-Trail.geojson",
+    "CY-0020": "CY-0020-Kannoures-Agios-Nikolaos-Trail.geojson",
+    "CY-0021": "CY-0021-Doxa-Soi-o-Theos-Madari-fire-lookout-Trail.geojson",
+    "CY-0022": "CY-0022-Enetika-Gefyria-Bridges-Trail.geojson",
+    "CY-0023": "CY-0023-Atalanti-Trail.geojson",
+    "CY-0024": "CY-0024-Agia-Eirini-Trail.geojson",
+    "CY-0025": "CY-0025-Panagia-tou-Araka-Trail.geojson",
+    "CY-0026": "CY-0026-Psilo-Dendro-Pouziaris-Trail.geojson",
+    "CY-0027": "CY-0027-Prodromos-Zoumi-Trail.geojson",
+    "CY-0028": "CY-0028-Mnimata-ton-Piskopon-Trail.geojson",
+    "CY-0029": "CY-0029-Loumata-ton-Aeton-Trail.geojson",
+    "CY-0030": "CY-0030-Livadi-Trail.geojson",
+    "CY-0031": "CY-0031-Kionia-Profitis-Ilias-Trail.geojson",
+    "CY-0032": "CY-0032-Xyliatos-Trail.geojson",
+    "CY-0033": "CY-0033-Selladi-tou-Karamanli-Kannavia-Trail.geojson",
+    "CY-0034": "CY-0034-Madari-Selladi-tou-Karamanli-Trail.geojson",
+    "CY-0035": "CY-0035-Chrysovrysi-Trail.geojson"
+};
+
+/////////////////
+// NATURA 2000 //
+/////////////////
 const naturaMap = {
     "CY-0039": { code: "CY3000002", layer: 1, name: "Cape Gkreko SPA Natura 2000" },
     "CY-0060": { code: "CY4000010", layer: 0, name: "Akamas Peninsula Natura 2000" },
@@ -101,10 +160,10 @@ const naturaMap = {
     "CY-0063": { code: "CY6000010", layer: 1, name: "Oroklini Lake Natura 2000" },
     "CY-0064": { code: "CY3000008", layer: 0, name: "Paralimni Lake Natura 2000" },
     "CY-0065": { code: "CY3000007", layer: 1, name: "Achna Dam Natura 2000" },
-    "CY-0066": { code: "CY2000015", layer: 1, name: "Vouni Panagias Natura 2000" },
+    "CY-0066": { code: "CY4000004", layer: 1, name: "Vouni Panagias Natura 2000" },
     "CY-0067": { code: "CY4000013", layer: 1, name: "Kato Pafos Lighthouse Natura 2000" },
-    "CY-0068": { code: "CY2000008", layer: 1, name: "Kremmoi Chanoutari Natura 2000" },
-    "CY-0069": { code: "CY2000007", layer: 0, name: "Kremmoi Ezousas Natura 2000" },
+    "CY-0068": { code: "CY4000017", layer: 1, name: "Kremmoi Chanoutari (Chanoutari Cliffs) Natura 2000" },
+    "CY-0069": { code: "CY4000022", layer: 1, name: "Kremmoi Ezousas Natura 2000" },
     "CY-0070": { code: "CY4000019", layer: 1, name: "Koilada Sarama Natura 2000" },
     "CY-0071": { code: "CY4000020", layer: 1, name: "Koilada Diarizou Natura 2000" },
     "CY-0072": { code: "CY4000021", layer: 1, name: "Koilada Ezousas Natura 2000" },
@@ -121,15 +180,17 @@ const naturaMap = {
     "CY-0083": { code: "CY4000016", layer: 1, name: "Agias Aiakterinis - Agias Paraskevis Canyons Natura 2000" },
     "CY-0084": { code: "CY2000002", layer: 0, name: "Alykos Potamos Natura 2000" },
     "CY-0085": { code: "CY2000003", layer: 0, name: "Periochi Mitserou - Agrokipias Natura 2000" },
+    "CY-0086": { code: "CY2000009", layer: 0, name: "Fountoukodasi Pitsilias Natura 2000" },
     "CY-0087": { code: "CY2000010", layer: 0, name: "Koilada Potamou Maroullenas Natura 2000" },
     "CY-0088": { code: "CY2000011", layer: 0, name: "Potamos Peristerona Natura 2000" },
     "CY-0089": { code: "CY2000012", layer: 0, name: "Kargoti Valley Natura 2000" },
     "CY-0090": { code: "CY3000009", layer: 1, name: "Agias Theklas - Liopetri Area Natura 2000" },
     "CY-0091": { code: "CY4000001", layer: 0, name: "Polis - Gialia Area Natura 2000" },
+    "CY-0092": { code: "CY4000005", layer: 0, name: "Episkopi Morou Nerou Natura 2000" },
     "CY-0094": { code: "CY4000009", layer: 0, name: "Skoulli Area Natura 2000" },
-    "CY-0095": { code: "CY4000015", layer: 1, name: "Kritou Marottou Area Natura 2000" },
+    "CY-0095": { code: "CY4000015", layer: 0, name: "Kritou Marottou Area Natura 2000" },
     "CY-0096": { code: "CY5000007", layer: 0, name: "Asgata Area Natura 2000" },
-    "CY-0097": { code: "CY6000003", layer: 1, name: "Periochi Lympion - Agias Annas Natura 2000" },
+    "CY-0097": { code: "CY6000003", layer: 0, name: "Periochi Lympion - Agias Annas Natura 2000" },
     "CY-0098": { code: "CY6000004", layer: 0, name: "Stavrovouni Forest Natura 2000" },
     "CY-0099": { code: "CY6000005", layer: 0, name: "Lefkara Area Natura 2000" },
     "CY-0037": { code: "CY6000002", layer: 1, name: "Larnaca Saltwater Lake Wetland Reserve" }
@@ -141,6 +202,7 @@ const naturaMap = {
 
 const potaPinsLayer           = L.layerGroup(); // POTA boundaries (polygons + Natura 2000)
 const potaBoundaryLayer       = L.layerGroup();
+const potaTrailLayer          = L.layerGroup();
 const sotaLayer               = L.layerGroup(); // SOTA summits
 const sotaActivationZoneLayer = L.layerGroup();
 const mcdLayer                = L.layerGroup(); // McDonald's locations
@@ -292,8 +354,10 @@ const PotaFilterControl = L.Control.extend({
 
         // Additive highlight mode
         boxAdditive.addEventListener("change", () => {
-            additiveHighlight = boxAdditive.checked;
-            console.log("Additive Highlight:", additiveHighlight);
+            //additiveHighlight = boxAdditive.checked;
+            //console.log("Additive Highlight:", additiveHighlight);
+            highlightMode = boxAdditive.checked ? "additive" : "exclusive";
+            console.log("Highlight mode:", highlightMode);
             potaRefreshMarkers();
         });
 
@@ -382,6 +446,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const overlays = {
     "POTA Pins": potaPinsLayer,
     "POTA Boundaries": potaBoundaryLayer,
+    "POTA Trails": potaTrailLayer,
     "SOTA Summits": sotaLayer,
     "SOTA Activation Zone": sotaActivationZoneLayer,
     "Picnic Sites": picnicSitesLayer,
@@ -539,9 +604,89 @@ function addHighlight(geoLayer) {
     highlightLayerGroup.addLayer(geoLayer);
 }
 
+////////////////
+// TRAIL ZOOM //
+////////////////
+map.on("zoomend", () => {
+    const z = map.getZoom();
+
+    const w = z >= 17 ? 18 :
+              z >= 16 ? 14 :
+              z >= 15 ? 10 :
+              z >= 14 ? 7  :
+              z >= 13 ? 5  :
+              z >= 12 ? 3  :
+              2;   // zoom 8–11
+
+    const o = z >= 17 ? 0.9 :
+              z >= 16 ? 0.85 :
+              z >= 15 ? 0.8 :
+              z >= 14 ? 0.75 :
+              z >= 13 ? 0.7 :
+              z >= 12 ? 0.6 :
+              0.5;  // zoom 8–11
+
+    potaTrailLayer.eachLayer(layer => {
+        layer.setStyle({
+            weight: w,
+            opacity: o
+        });
+    });
+});
+
+
+
 /////////////////////
 // POTA BOUNDARIES //
 /////////////////////
+
+function loadAllPotaTrails() {
+
+    console.log("POTA: Trail loader started");
+
+    for (const potaCode in potaTrails) {
+
+        const file = potaTrails[potaCode];
+        const park = parks.find(p => p.reference === potaCode);
+        if (!park || !file) {
+            console.warn("POTA: Skipping", potaCode, "(no park or no file)");
+            continue;
+        }
+
+        const colour = COLOUR_SCENIC_TRAIL;
+        const url = `./geojson/POTA/${file}`;
+
+        console.log("POTA: Fetching trail", potaCode, "from", url);
+
+        fetch(url)
+            .then(r => {
+                if (!r.ok) {
+                    console.error("POTA: ERROR loading", potaCode, file, "HTTP", r.status);
+                    return null;
+                }
+                return r.json();
+            })
+            .then(data => {
+                if (!data) return;
+
+                console.log("POTA: Adding trail", potaCode);
+
+                const trail = L.geoJSON(data, {
+                    pane: "overlayPane",
+                    style: {
+                        color: colour,
+                        weight: 4,
+                        opacity: 0.9
+                    }
+                }).addTo(potaTrailLayer);
+
+                park._trailLayer = trail;
+            })
+            .catch(err => {
+                console.error("POTA: Fetch failed for", potaCode, file, err);
+            });
+    }
+}
 
 function loadAllPotaBoundaries() {
 
@@ -553,7 +698,7 @@ function loadAllPotaBoundaries() {
 
         const colour = potaChooseColour(park);
 
-        fetch(`./geojson/${file}`)
+        fetch(`./geojson/POTA/${file}`)
             .then(r => r.json())
             .then(data => {
 
@@ -563,7 +708,7 @@ function loadAllPotaBoundaries() {
                         color: colour,
                         fillColor: colour,
                         weight: 2,
-                        fillOpacity: 0.25
+                        fillOpacity: (colour === COLOUR_DEFAULT ? 0.50 : 0.25)
                     }
                 }).addTo(potaBoundaryLayer);
 
@@ -590,6 +735,7 @@ function potaRefreshMarkers() {
         if (!park.latitude || !park.longitude) return;
 
         const isActivated = activatedList.includes(park.reference);
+        const isIllegal   = illegalParks.has(park.reference);
 
         // --- NEW FILTERING LOGIC ---
         if (showActivated && !isActivated) return;     // only show activated
@@ -602,7 +748,7 @@ function potaRefreshMarkers() {
         const regionName = regionNames[park.locationDesc] || park.locationDesc || "Unknown";
 
         let line5;
-        if (illegalParks.has(park.reference)) {
+        if (isIllegal) {
             line5 = "ILLEGAL to operate radio here";
         } else if (park.qsos === 0) {
             line5 = "ATNO";
@@ -617,13 +763,21 @@ function potaRefreshMarkers() {
                 Maidenhead : ${park.grid}<br>
                 Region : ${regionName}<br>
                 ${line5}<br><br>
-                <div style="display:flex; gap:10px;">
-                    ${
-                        isActivated
-                        ? `<button onclick="deleteActivated('${park.reference}')">Remove Activation</button>`
-                        : `<button onclick="markActivated('${park.reference}')">Mark as Activated</button>`
-                    }
-                </div>
+
+                ${
+                    isIllegal
+                    ? ""   // illegal ? no activation buttons at all
+                    : `
+                        <div style="display:flex; gap:10px;">
+                            ${
+                                isActivated
+                                ? `<button onclick="deleteActivated('${park.reference}')">Remove Activation</button>`
+                                : `<button onclick="markActivated('${park.reference}')">Mark as Activated</button>`
+                            }
+                        </div>
+                    `
+                }
+
             </div>
         `;
 
@@ -809,7 +963,7 @@ function sotaZoneLoadLayers() {
 
     console.log("SOTA Zones: Starting load…");
 
-    fetch("./geojson/sota.geojson")
+    fetch("./geojson/SOTA/sota.geojson")
         .then(response => {
             console.log("SOTA Zones: Fetch response =", response.status);
             return response.json();
@@ -829,7 +983,7 @@ function sotaZoneLoadLayers() {
 
                 console.log(`SOTA Zones: Loading zone for ${feature.properties.summitCode} ? ${zoneFile}`);
 
-                fetch(`./geojson/${zoneFile}`)
+                fetch(`./geojson/SOTA/${zoneFile}`)
                     .then(r => r.json())
                     .then(zoneGeo => {
 
@@ -861,7 +1015,7 @@ function sotaLoadLayers() {
 
     console.log("SOTA: Starting load…");
 
-    fetch("./geojson/sota.geojson")
+    fetch("./geojson/SOTA/sota.geojson")
         .then(response => {
             console.log("SOTA: Fetch response status =", response.status);
             return response.json();
@@ -934,6 +1088,7 @@ fetch("https://api.pota.app/program/parks/CY")
         potaRefreshMarkers();
         loadAllNaturaBoundaries();
         loadAllPotaBoundaries();
+        loadAllPotaTrails();
         mcdLoadMarkers();
         sotaLoadLayers();
         sotaZoneLoadLayers();
@@ -967,8 +1122,8 @@ legend.onAdd = function (map) {
                 <!-- Section: Credits -->
                 <div class="legend-section-title">Credits</div>
                     Creator: M1GRY with CoPilot<br>
-                    Updated: 01-Sep-2026<br>
-                    Version: V13.2<br><br>
+                    Updated: 03-Sep-2026<br>
+                    Version: V15.1<br><br>
 
                 <!-- Section: POTA Categories -->
                 <div class="legend-section-title">POTA Categories</div>
