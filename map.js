@@ -19,6 +19,7 @@ const COLOUR_ARCHEOLOGICAL   = "#888888";
 const COLOUR_HIGHLIGHT       = "#ff0066";
 const COLOUR_ACTIVATED       = "#FFFFFF";
 const COLOUR_ILLEGAL         = "#ff0000";  
+const COLOUR_CUSTOM_PINPOINT = "#f00f0f";  
 
 // A central test coordinate inside Cyprus
 const CYPRUS_TEST_LAT = 34.95;
@@ -198,6 +199,41 @@ const naturaMap = {
     "CY-0037": { code: "CY6000002", layer: 1, name: "Larnaca Saltwater Lake Wetland Reserve" }
 };
 
+///////////
+// ICONS //
+///////////
+
+const parkingIcon = L.icon({
+    iconUrl: 'images/custom-parking.jpg',
+    iconSize: [28, 28],   // tweak as needed
+    iconAnchor: [14, 28], // bottom centre
+    popupAnchor: [0, -28]
+});
+const cancelIcon = L.icon({
+    iconUrl: 'images/custom-cancel.jpg',
+    iconSize: [28, 28],
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -28]
+});
+const removeIcon = L.icon({
+    iconUrl: 'images/custom-remove.jpg',
+    iconSize: [28, 28],
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -28]
+});
+const foodIcon = L.icon({
+    iconUrl: 'images/custom-food.jpg',
+    iconSize: [28, 28],
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -28]
+});
+
+const iconMap = {
+    parking: parkingIcon,
+    food: foodIcon
+    // add more types here later
+};
+
 ////////////////////
 // LAYER GROUPS   //
 ////////////////////
@@ -209,6 +245,7 @@ const sotaLayer               = L.layerGroup(); // SOTA summits
 const sotaActivationZoneLayer = L.layerGroup();
 const mcdLayer                = L.layerGroup(); // McDonald's locations
 const picnicSitesLayer        = L.layerGroup(); // Offical piicnic sites
+const customPinsLayer         = L.layerGroup(); // my pin points
 
 
 ////////////////////
@@ -452,7 +489,8 @@ const overlays = {
     "SOTA Summits": sotaLayer,
     "SOTA Activation Zone": sotaActivationZoneLayer,
     "Picnic Sites": picnicSitesLayer,
-    "McDonald's": mcdLayer
+    "McDonald's(tm)": mcdLayer,
+    "Custom Pins's": customPinsLayer
 };
 
 L.control.layers(null, overlays).addTo(map);
@@ -1132,7 +1170,7 @@ legend.onAdd = function (map) {
                 <div class="legend-section-title">Credits</div>
                     Creator: M1GRY with CoPilot<br>
                     Updated: 03-Sep-2026<br>
-                    Version: V15.2<br><br>
+                    Version: V15.3<br><br>
 
                 <!-- Section: POTA Categories -->
                 <div class="legend-section-title">POTA Categories</div>
@@ -1259,6 +1297,150 @@ const FakeLocateControl = L.Control.extend({
 
 map.whenReady(() => {
     map.addControl(new FakeLocateControl());
+});
+
+/////////////////////////
+// HANDLE CUSTOM ICONS //
+/////////////////////////
+let savedPins = JSON.parse(localStorage.getItem("customPins") || "[]");
+savedPins.forEach(addCustomPinToMap);
+
+function deleteCustomPin(lat, lon) {
+    let pins = JSON.parse(localStorage.getItem("customPins") || "[]");
+
+    // Remove the matching pin
+    pins = pins.filter(p => p.lat !== lat || p.lon !== lon);
+
+    // Save updated list
+    localStorage.setItem("customPins", JSON.stringify(pins));
+
+    // Clear the layer FIRST
+    customPinsLayer.clearLayers();
+
+    // Clear and redraw the layer
+    pins.forEach(addCustomPinToMap);
+
+    // Close popup
+    map.closePopup();
+}
+
+function addCustomPinToMap(pin) {
+
+    const icon = iconMap[pin.type] || parkingIcon;
+
+    const marker = L.marker([pin.lat, pin.lon], { icon });
+
+    marker.bindPopup(`
+        <div class="popup-content">
+<b>${(pin.type || "parking").charAt(0).toUpperCase() + (pin.type || "parking").slice(1)} Pin</b>
+
+            <div style="display:flex; align-items:center; gap:20px;">
+
+                <button onclick="window.open('https://www.google.com/maps?q=${pin.lat},${pin.lon}', '_blank')">
+                    Google
+                </button>
+
+                <img src="images/custom-remove.jpg"
+                     width="28" height="28"
+                     style="cursor:pointer;"
+                     onclick="deleteCustomPin(${pin.lat}, ${pin.lon})">
+
+                <img src="images/custom-cancel.jpg"
+                     width="28" height="28"
+                     style="cursor:pointer; margin-left:auto;"
+                     onclick="map.closePopup()">
+
+            </div>
+        </div>
+    `);
+
+    marker.addTo(customPinsLayer);
+}
+
+function addCustomPin(lat, lon, type) {
+
+    // Save to localStorage
+    let pins = JSON.parse(localStorage.getItem("customPins") || "[]");
+    pins.push({ lat, lon, type });
+    localStorage.setItem("customPins", JSON.stringify(pins));
+
+    // Choose icon based on type
+    const icon = iconMap[type] || parkingIcon;
+
+    // Create marker
+    const marker = L.marker([lat, lon], { icon });
+
+    // Popup
+    marker.bindPopup(`
+        <div class="popup-content">
+            <b>${type.charAt(0).toUpperCase() + type.slice(1)} Pin</b><br><br>
+
+            <div style="display:flex; align-items:center; gap:20px;">
+
+                <button onclick="window.open('https://www.google.com/maps?q=${lat},${lon}', '_blank')">
+                    Google
+                </button>
+
+                <img src="images/custom-remove.jpg"
+                     width="28" height="28"
+                     style="cursor:pointer;"
+                     onclick="deleteCustomPin(${lat}, ${lon})">
+
+                <img src="images/custom-cancel.jpg"
+                     width="28" height="28"
+                     style="cursor:pointer; margin-left:auto;"
+                     onclick="map.closePopup()">
+
+            </div>
+        </div>
+    `);
+
+    // Add to layer
+    marker.addTo(customPinsLayer);
+
+    // Ensure layer is visible
+    if (!map.hasLayer(customPinsLayer)) {
+        customPinsLayer.addTo(map);
+    }
+
+    // Close the "Add pin?" popup
+    map.closePopup();
+}
+
+
+map.on('click', function(e) {
+    const lat = e.latlng.lat;
+    const lon = e.latlng.lng;
+
+    L.popup()
+        .setLatLng(e.latlng)
+        .setContent(`
+            <div class="popup-content">
+                Add a custom pin here?<br><br>
+
+                <div style="display:flex; align-items:center; gap:20px;">
+
+                    <img src="images/custom-parking.jpg"
+                         width="28" height="28"
+                         style="cursor:pointer;"
+                         onclick="addCustomPin(${lat}, ${lon}, 'parking')">
+
+
+                    <!-- Spacer icon (knives & forks or anything you like) -->
+                    <img src="images/custom-food.jpg"
+                         width="28" height="28"
+                         style="cursor:pointer;"
+                         onclick="addCustomPin(${lat}, ${lon}, 'food')">
+
+                    <img src="images/custom-cancel.jpg"
+                         width="28" height="28"
+                         style="cursor:pointer;"
+                         onclick="map.closePopup()">
+
+                </div>
+            </div>
+        `)
+        .openOn(map);
 });
 
 map.on('locationfound', function(e) {
