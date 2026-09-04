@@ -5,6 +5,7 @@
 // V13.0 - 01-Sep-2026
 // V14.0 - 02-Sep-2026
 // V15.0 - 03-Sep-2026
+// V16.0 - 04-Sep-2026
 
 //////////////////////
 // CONSTANTS & DATA //
@@ -310,7 +311,7 @@ const PotaFilterControl = L.Control.extend({
         
             <!-- Header with triangle + Cyprus icon -->
             <div id="options-header">
-                <span id="options-triangle">&#9662;</span> <!-- down triangle -->
+                <span id="options-triangle">&#9660;</span> <!-- down triangle -->
                 Options Menu
             </div>
         
@@ -402,22 +403,29 @@ const PotaFilterControl = L.Control.extend({
 
         // --- Export logic ---
         exportBtn.addEventListener("click", () => {
-            const activatedList = JSON.parse(localStorage.getItem("activatedParks") || "[]");
-
-            const blob = new Blob([JSON.stringify(activatedList, null, 2)], {
+            const activations = JSON.parse(localStorage.getItem("activations") || "[]");
+            const customPins = JSON.parse(localStorage.getItem("customPins") || "[]");
+        
+            const data = {
+                activations: activations,
+                customPins: customPins
+            };
+        
+            const blob = new Blob([JSON.stringify(data, null, 2)], {
                 type: "application/json"
             });
-
+        
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
-
+        
             a.href = url;
-            a.download = "activatedParks.json";
+            a.download = "cypomap-data.json";
             a.click();
-
+        
             URL.revokeObjectURL(url);
-
-            console.log("Exported activations:", activatedList.length);
+        
+            console.log("Exported activations:", activations.length);
+            console.log("Exported custom pins:", customPins.length);
         });
 
         // --- Import logic ---
@@ -425,38 +433,42 @@ const PotaFilterControl = L.Control.extend({
             const input = document.createElement("input");
             input.type = "file";
             input.accept = "application/json";
-
+        
             input.onchange = () => {
                 const file = input.files[0];
                 const reader = new FileReader();
-
+        
                 reader.onload = () => {
                     try {
                         const imported = JSON.parse(reader.result);
-
-                        if (!Array.isArray(imported)) {
-                            console.error("Import failed: JSON is not an array.");
-                            alert("Import failed: JSON must be an array of park references.");
-                            return;
-                        }
-
-                        localStorage.setItem("activatedParks", JSON.stringify(imported));
-
-                        console.log("Imported activations:", imported.length);
-                        alert(`Imported ${imported.length} activated parks.`);
-
+        
+                        // Expect unified format
+                        localStorage.setItem("activations", JSON.stringify(imported.activations || []));
+                        localStorage.setItem("customPins", JSON.stringify(imported.customPins || []));
+        
+                        console.log("Imported activations:", (imported.activations || []).length);
+                        console.log("Imported custom pins:", (imported.customPins || []).length);
+        
+                        // Refresh POTA/SOTA/LLOTA markers
                         potaRefreshMarkers();
+        
+                        // Refresh custom pins
+                        customPinsLayer.clearLayers();
+                        (imported.customPins || []).forEach(addCustomPinToMap);
+        
+                        alert("Import complete.");
                     } catch (err) {
                         console.error("Import failed:", err);
                         alert("Import failed: invalid JSON.");
                     }
                 };
-
+        
                 reader.readAsText(file);
             };
-
+        
             input.click();
         });
+
 
         return container;
     }
@@ -473,7 +485,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (header && menu && triangle) {
         header.addEventListener("click", () => {
             const collapsed = menu.classList.toggle("collapsed");
-            triangle.innerHTML = collapsed ? "&#9662;" : "&#9652;"; // down / up
+            triangle.innerHTML = collapsed ? "&#9660;" : "&#9650;"; // down / up
         });
     }
 });
@@ -565,19 +577,26 @@ function makeMcdMarker() {
     });
 }
 
+
 function markActivated(ref) {
-    let list = JSON.parse(localStorage.getItem("activatedParks") || "[]");
-    if (!list.includes(ref)) {
-        list.push(ref);
-        localStorage.setItem("activatedParks", JSON.stringify(list));
+    let list = JSON.parse(localStorage.getItem("activations") || "[]");
+
+    // Check if already present
+    if (!list.some(a => a.ref === ref)) {
+        list.push({ ref: ref, type: "POTA" });  // default type for now
+        localStorage.setItem("activations", JSON.stringify(list));
     }
+
     potaRefreshMarkers();
 }
 
 function deleteActivated(ref) {
-    let list = JSON.parse(localStorage.getItem("activatedParks") || "[]");
-    list = list.filter(r => r !== ref);
-    localStorage.setItem("activatedParks", JSON.stringify(list));
+    let list = JSON.parse(localStorage.getItem("activations") || "[]");
+
+    list = list.filter(a => a.ref !== ref);
+
+    localStorage.setItem("activations", JSON.stringify(list));
+
     potaRefreshMarkers();
 }
 
@@ -591,8 +610,8 @@ function potaChooseColour(park) {
 
     if (illegalParks.has(park.reference)) return COLOUR_ILLEGAL;
 
-    const activatedList = JSON.parse(localStorage.getItem("activatedParks") || "[]");
-    if (highlightActivated && activatedList.includes(park.reference)) {
+    const activatedList = JSON.parse(localStorage.getItem("activations") || "[]");
+    if (highlightActivated && activatedList.some(a => a.ref === park.reference)) {
         return COLOUR_ACTIVATED;
     }
 
@@ -768,7 +787,7 @@ function potaRefreshMarkers() {
 
     potaPinsLayer.clearLayers();
 
-    const activatedList = JSON.parse(localStorage.getItem("activatedParks") || "[]");
+    const activatedList = JSON.parse(localStorage.getItem("activations") || "[]");
 
     parks.forEach(park => {
 
@@ -777,7 +796,7 @@ function potaRefreshMarkers() {
 
         if (!lat || !lon) return;
 
-        const isActivated = activatedList.includes(park.reference);
+        const isActivated = activatedList.some(a => a.ref === park.reference);
         const isIllegal   = illegalParks.has(park.reference);
 
         // --- NEW FILTERING LOGIC ---
@@ -1159,10 +1178,6 @@ legend.onAdd = function (map) {
         <div id="legend-menu" class="collapsed">
 
             <!-- Header -->
-            <div id="legend-header">
-                <span id="legend-triangle">&#9662;</span>
-                Legend
-            </div>
 
             <div id="legend-content">
 
@@ -1170,7 +1185,7 @@ legend.onAdd = function (map) {
                 <div class="legend-section-title">Credits</div>
                     Creator: M1GRY with CoPilot<br>
                     Updated: 03-Sep-2026<br>
-                    Version: V15.3<br><br>
+                    Version: V16.1<br><br>
 
                 <!-- Section: POTA Categories -->
                 <div class="legend-section-title">POTA Categories</div>
@@ -1181,6 +1196,10 @@ legend.onAdd = function (map) {
                     <i style="background: ${COLOUR_ARCHEOLOGICAL}"></i> Archeological Reserve<br>
                     <i style="background: ${COLOUR_DEFAULT}"></i> Other<br>
                     <i style="background: ${COLOUR_ILLEGAL}"></i> Illegal<br>
+            </div>
+            <div id="legend-header">
+                <span id="legend-triangle">&#9660;</span>
+                Legend
             </div>
         </div>
     `;
@@ -1199,9 +1218,9 @@ document.addEventListener("click", function(e) {
         // Update arrow
         const triangle = e.target.querySelector("#legend-triangle");
         if (box.classList.contains("collapsed")) {
-            triangle.innerHTML = "&#9652;";   // down arrow
+            triangle.innerHTML = "&#9650;";   // down arrow
         } else {
-            triangle.innerHTML = "&#9662;";   // up arrow
+            triangle.innerHTML = "&#9660;";   // up arrow
         }
     }
 });
