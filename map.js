@@ -38,12 +38,32 @@ const cyprusBounds = [
 
 const GPS_ZOOM_LEVEL = 14;
 
+// Base map URLs
+const esriImageryURL = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
+const esriStreetURL  = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}";
+const osmURL         = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+const openTopoURL    = "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png";
+
+const esriImagery = L.tileLayer(esriImageryURL, { maxZoom: 19, attribution: "Tiles © Esri | Source: Esri, USGS, NOAA" });
+const esriStreet  = L.tileLayer(esriStreetURL,  { maxZoom: 19, attribution: "Tiles © Esri | Source: Esri, USGS, NOAA" });
+const osm         = L.tileLayer(osmURL,         { maxZoom: 19, attribution: "© OpenStreetMap contributors" });
+const openTopo    = L.tileLayer(openTopoURL,    { maxZoom: 17, attribution: "© OpenTopoMap (CC-BY-SA)" });
+
+const baseLayers = [
+    esriStreet,
+    osm,
+    openTopo,
+    esriImagery
+];
+
+
 const regionNames = {
     "CY-PA": "Paphos",
     "CY-LA": "Larnaca",
     "CY-NI": "Nicosia",
     "CY-LE": "Limassol",
-    "CY-FA": "Famagusta"
+    "CY-FA": "Famagusta",
+    "CY-KY": "North Cyprus"
 };
 
 const illegalParks = new Set([
@@ -228,6 +248,12 @@ const foodIcon = L.icon({
     iconAnchor: [14, 28],
     popupAnchor: [0, -28]
 });
+const gotoMapsIcon = L.icon({
+    iconUrl: 'images/goto-google-maps.png',
+    iconSize: [28, 28],
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -28]
+});
 
 const iconMap = {
     parking: parkingIcon,
@@ -260,10 +286,13 @@ const map = L.map('map', {
     maxZoom: 17
 }).setView([35.0, 33.0], 9);
 
-L.tileLayer(
-    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
-    { attribution: 'Tiles © Esri | Source: Esri, USGS, NOAA' }
-).addTo(map);
+//L.tileLayer(
+//    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+//    { attribution: 'Tiles © Esri | Source: Esri, USGS, NOAA' }
+//).addTo(map);
+
+let currentBase = 0;
+baseLayers[currentBase].addTo(map);
 
 // Make POTA layers visible by default
 potaPinsLayer.addTo(map);
@@ -284,10 +313,12 @@ const highlightLayerGroup = L.layerGroup().addTo(map);
 // BOOLEAN HIGHLIGHT OPTIONS   //
 /////////////////////////////////
 
-let showActivated = false;
-let showUnactivated = false;
+let popupOpen          = false;
+let popupJustClosed    = false;
+let showActivated      = false;
+let showUnactivated    = false;
 let highlightActivated = false;
-let highlightATNO = false;
+let highlightATNO      = false;
 
 const PotaFilterControl = L.Control.extend({
     options: { position: 'topright' },
@@ -695,9 +726,34 @@ map.on("zoomend", () => {
 
 
 
-/////////////////////
-// POTA BOUNDARIES //
-/////////////////////
+////////////
+// TRAILS //
+////////////
+let activeTrail = null;   // currently highlighted trail
+
+function highlightTrail(park) {
+
+    console.log("Highlighting trail for", park.reference);
+
+    // Remove highlight from previous trail
+    if (activeTrail && activeTrail._trailLayer) {
+        activeTrail._trailLayer.setStyle({
+            color: COLOUR_SCENIC_TRAIL,   // pale blue
+            weight: 4,
+            opacity: 0.9
+        });
+    }
+
+    // Apply highlight to new trail
+    if (park && park._trailLayer) {
+        park._trailLayer.setStyle({
+            color: "#0047b3",   // dark blue highlight
+            weight: 6,
+            opacity: 1.0
+        });
+        activeTrail = park;
+    }
+}
 
 function loadAllPotaTrails() {
 
@@ -706,7 +762,9 @@ function loadAllPotaTrails() {
     for (const potaCode in potaTrails) {
 
         const file = potaTrails[potaCode];
+
         const park = parks.find(p => p.reference === potaCode);
+
         if (!park || !file) {
             console.warn("POTA: Skipping", potaCode, "(no park or no file)");
             continue;
@@ -733,19 +791,39 @@ function loadAllPotaTrails() {
                 const trail = L.geoJSON(data, {
                     pane: "overlayPane",
                     style: {
-                        color: colour,
+                        color: colour,   // pale blue
                         weight: 4,
                         opacity: 0.9
                     }
                 }).addTo(potaTrailLayer);
 
+                // Store reference
                 park._trailLayer = trail;
+
+                // Add click handler to trail pin (if it exists)
+                if (park._marker) {
+                    console.log("Trail loader: marker exists for", park.reference);
+                
+                    park._marker.on('click', () => {
+                        console.log("Trail loader: CLICK detected for", park.reference);
+                        highlightTrail(park);
+                    });
+                } else {
+                    console.warn("Trail loader: NO marker yet for", park.reference);
+                }
+                
+
+
             })
             .catch(err => {
                 console.error("POTA: Fetch failed for", potaCode, file, err);
             });
     }
 }
+
+/////////////////////
+// POTA BOUNDARIES //
+/////////////////////
 
 function loadAllPotaBoundaries() {
 
@@ -838,7 +916,7 @@ function potaRefreshMarkers() {
                             }
         
                             <button onclick="window.open('https://www.google.com/maps?q=${lat},${lon}', '_blank')">
-                                Google
+                                goto Google Maps
                             </button>
                         </div>
                     `
@@ -850,6 +928,14 @@ function potaRefreshMarkers() {
         const marker = L.marker([lat, lon], { icon })
             .addTo(potaPinsLayer)
             .bindPopup(popupHtml);
+
+        park._marker = marker;   // <-- THIS is the missing link
+        park._marker.on('click', (e) => {
+            L.DomEvent.stopPropagation(e);   // prevent map click
+            potaHandleClick(park);           // your existing logic
+            highlightTrail(park);            // highlight if trail exists
+        });
+        
 
         marker.on("click", () => potaHandleClick(park));
     });
@@ -981,7 +1067,7 @@ async function picnicSitesLoadMarkers() {
                     <div><strong>Capacity:</strong> ${props.capacity}</div>
                     <div>
                         <a href="https://www.google.com/maps?q=${lat},${lon}" target="_blank">
-                            Open in Google Maps
+                            goto Google Maps
                         </a>
                     </div>
                 </div>
@@ -1012,7 +1098,7 @@ function mcdLoadMarkers() {
             <b>${loc.name}</b><br>
             ${loc.address}<br>
             <a href="https://www.google.com/maps?q=${loc.lat},${loc.lon}" target="_blank">
-                Open in Google Maps
+                goto Google Maps
             </a>
         `;
 
@@ -1185,7 +1271,7 @@ legend.onAdd = function (map) {
                 <div class="legend-section-title">Credits</div>
                     Creator: M1GRY with CoPilot<br>
                     Updated: 03-Sep-2026<br>
-                    Version: V16.1<br><br>
+                    Version: V16.2<br><br>
 
                 <!-- Section: POTA Categories -->
                 <div class="legend-section-title">POTA Categories</div>
@@ -1198,7 +1284,7 @@ legend.onAdd = function (map) {
                     <i style="background: ${COLOUR_ILLEGAL}"></i> Illegal<br>
             </div>
             <div id="legend-header">
-                <span id="legend-triangle">&#9660;</span>
+                <span id="legend-triangle">&#9650;</span>
                 Legend
             </div>
         </div>
@@ -1343,6 +1429,11 @@ function deleteCustomPin(lat, lon) {
     map.closePopup();
 }
 
+function gotoGoogleMaps(lat, lon) {
+    const url = `https://www.google.com/maps?q=${lat},${lon}`;
+    window.open(url, "_blank");
+}
+
 function addCustomPinToMap(pin) {
 
     const icon = iconMap[pin.type] || parkingIcon;
@@ -1351,14 +1442,15 @@ function addCustomPinToMap(pin) {
 
     marker.bindPopup(`
         <div class="popup-content">
-<b>${(pin.type || "parking").charAt(0).toUpperCase() + (pin.type || "parking").slice(1)} Pin</b>
+            <b>${(pin.type || "parking").charAt(0).toUpperCase() + (pin.type || "parking").slice(1)} Pin</b>
 
             <div style="display:flex; align-items:center; gap:20px;">
 
-                <button onclick="window.open('https://www.google.com/maps?q=${pin.lat},${pin.lon}', '_blank')">
-                    Google
-                </button>
-
+                <img src="images/goto-google-maps.png"
+                     width="28" height="28"
+                     style="cursor:pointer;"
+                     onclick="gotoGoogleMaps(${pin.lat}, ${pin.lon})">
+                
                 <img src="images/custom-remove.jpg"
                      width="28" height="28"
                      style="cursor:pointer;"
@@ -1397,7 +1489,7 @@ function addCustomPin(lat, lon, type) {
             <div style="display:flex; align-items:center; gap:20px;">
 
                 <button onclick="window.open('https://www.google.com/maps?q=${lat},${lon}', '_blank')">
-                    Google
+                    goto Google Maps
                 </button>
 
                 <img src="images/custom-remove.jpg"
@@ -1427,9 +1519,59 @@ function addCustomPin(lat, lon, type) {
 }
 
 
+/////////////
+// MAP ON ///
+/////////////
+
+function clickIsFromPopup(e) {
+    let el = e.originalEvent.target;
+    while (el) {
+        if (el.classList && el.classList.contains("leaflet-popup")) {
+            return true;
+        }
+        el = el.parentElement;
+    }
+    return false;
+}
+
+map.on('popupopen', () => {
+    popupOpen = true;
+    popupJustClosed = false;
+});
+
+map.on('popupclose', () => {
+    popupOpen = false;
+    popupJustClosed = true;
+
+    // Cool-down: ignore the next click only
+    setTimeout(() => popupJustClosed = false, 150);
+});
+
 map.on('click', function(e) {
     const lat = e.latlng.lat;
     const lon = e.latlng.lng;
+
+    console.log("Map CLICK (not a pin)");
+    // Reset trail highlight when clicking away
+    if (activeTrail) {
+        console.log("Removing highlight from", activeTrail.reference);
+        activeTrail._trailLayer.setStyle({
+            color: COLOUR_SCENIC_TRAIL,
+            weight: 4,
+            opacity: 0.9
+        });
+        activeTrail = null;
+    }
+
+    // Ignore clicks while popup is open
+    if (popupOpen) {
+        return;
+    }
+
+    // Ignore the click that *just* closed a popup
+    if (popupJustClosed) {
+        return;
+    }
 
     L.popup()
         .setLatLng(e.latlng)
@@ -1494,4 +1636,35 @@ map.on('locationfound', function(e) {
 
     map.setView([lat, lng], GPS_ZOOM_LEVEL);
 });
+const cycleControl = L.control({ position: 'topleft' });
+
+cycleControl.onAdd = function(map) {
+    const btn = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+    btn.innerHTML = `
+        <img src="images/map-base-layer.jpg"
+             width="28" height="28"
+             style="display:block;margin:auto;">
+    `;
+    btn.style.padding = "6px";
+    btn.style.cursor = "pointer";
+    btn.style.fontSize = "20px";
+    btn.style.textAlign = "center";
+
+    // Prevent map clicks when tapping this button
+    L.DomEvent.disableClickPropagation(btn);
+
+    btn.onclick = function() {
+        map.removeLayer(baseLayers[currentBase]);
+        currentBase = (currentBase + 1) % baseLayers.length;
+        baseLayers[currentBase].addTo(map);
+
+        // Optional visual feedback
+        btn.style.background = "#ddd";
+        setTimeout(() => btn.style.background = "", 150);
+    };
+
+    return btn;
+};
+
+cycleControl.addTo(map);
 
