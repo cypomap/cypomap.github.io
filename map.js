@@ -286,10 +286,9 @@ const map = L.map('map', {
     maxZoom: 17
 }).setView([35.0, 33.0], 9);
 
-//L.tileLayer(
-//    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
-//    { attribution: 'Tiles © Esri | Source: Esri, USGS, NOAA' }
-//).addTo(map);
+// Pane for highlighted trails
+map.createPane("highlightPane");
+map.getPane("highlightPane").style.zIndex = 650;   // above overlayPane (default 400)
 
 let currentBase = 0;
 baseLayers[currentBase].addTo(map);
@@ -738,19 +737,21 @@ function highlightTrail(park) {
     // Remove highlight from previous trail
     if (activeTrail && activeTrail._trailLayer) {
         activeTrail._trailLayer.setStyle({
-            color: COLOUR_SCENIC_TRAIL,   // pale blue
+            color: COLOUR_SCENIC_TRAIL,
             weight: 4,
             opacity: 0.9
         });
+        activeTrail._trailLayer.bringToBack();
     }
 
     // Apply highlight to new trail
     if (park && park._trailLayer) {
         park._trailLayer.setStyle({
-            color: "#0047b3",   // dark blue highlight
+            color: "#0047b3",
             weight: 6,
             opacity: 1.0
         });
+        park._trailLayer.bringToFront();
         activeTrail = park;
     }
 }
@@ -1270,8 +1271,8 @@ legend.onAdd = function (map) {
                 <!-- Section: Credits -->
                 <div class="legend-section-title">Credits</div>
                     Creator: M1GRY with CoPilot<br>
-                    Updated: 03-Sep-2026<br>
-                    Version: V16.2<br><br>
+                    Updated: 04-Sep-2026<br>
+                    Version: V16.4<br><br>
 
                 <!-- Section: POTA Categories -->
                 <div class="legend-section-title">POTA Categories</div>
