@@ -44,10 +44,10 @@ const esriStreetURL  = "https://server.arcgisonline.com/ArcGIS/rest/services/Wor
 const osmURL         = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 const openTopoURL    = "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png";
 
-const esriImagery = L.tileLayer(esriImageryURL, { maxZoom: 19, attribution: "Tiles © Esri | Source: Esri, USGS, NOAA" });
-const esriStreet  = L.tileLayer(esriStreetURL,  { maxZoom: 19, attribution: "Tiles © Esri | Source: Esri, USGS, NOAA" });
-const osm         = L.tileLayer(osmURL,         { maxZoom: 19, attribution: "© OpenStreetMap contributors" });
-const openTopo    = L.tileLayer(openTopoURL,    { maxZoom: 17, attribution: "© OpenTopoMap (CC-BY-SA)" });
+const esriImagery = L.tileLayer(esriImageryURL, { maxZoom: 21, attribution: "Tiles © Esri | Source: Esri, USGS, NOAA" });
+const esriStreet  = L.tileLayer(esriStreetURL,  { maxZoom: 21, attribution: "Tiles © Esri | Source: Esri, USGS, NOAA" });
+const osm         = L.tileLayer(osmURL,         { maxZoom: 21, attribution: "© OpenStreetMap contributors" });
+const openTopo    = L.tileLayer(openTopoURL,    { maxZoom: 21, attribution: "© OpenTopoMap (CC-BY-SA)" });
 
 const baseLayers = [
     esriStreet,
@@ -104,42 +104,102 @@ const potaPolygons = {
     "CY-0010": "CY-0010-Ayios-Nikandros-National-Forest.geojson",
     "CY-0011": "CY-0011-Pedagogiki-Akademia-National-Forest.geojson",
     "CY-0012": "CY-0012-Potamos-Liopetriou-National-Forest.geojson",
+    "CY-0013": "CY-0013-Stavros-tis-Psokas-Cyprus-Mouflon-Sanctuary.geojson",
+    // list of trails here 0014 to  0035
+    // CY-0036 does not exist (might have been deleted)
+    //Natura 2000 "CY-0037": { code: "CY6000002", layer: 1, name: "Larnaca Saltwater Lake Wetland Reserve" }
     "CY-0038": "CY-0038-Lara-Toxeftra-Turtle-Reserve-Marine-Protected-Area.geojson",
+    //Natura 2000 "CY-0039": { code: "CY3000002", layer: 1, name: "Cape Gkreko SPA Natura 2000" }
     "CY-0040": "CY-0040-Nisia-Marine-area-Marine-Protected-Area.geojson",
+    "CY-0041": "CY-0041-Livadhi-Tou-Pasha-Nature-Reserve.geojson",
+    "CY-0042": "CY-0042-Kryos-Potamos-Nature-Reserve.geojson",
+    "CY-0043": "CY-0043-Pikromiloudhi-Nature-Reserve.geojson",
+    "CY-0044": "CY-0044-Tripylos-Mavroi-Kremmoi-Nature-Reserve.geojson",
+    "CY-0045": "CY-0045-Chionistra-Nature-Reserve.geojson",
+    "CY-0046": "CY-0046-Drys-Tis-Lanias-Nature-Reserve.geojson",
+    "CY-0047": "CY-0047-Madari-Nature-Reserve.geojson",
     "CY-0048": "CY-0048-Orites-forest-Protected-Area.geojson",
     "CY-0049": "CY-0049-Ranti-forest-Protected-Area.geojson",
     "CY-0050": "CY-0050-Kyparissia-Protected-Area.geojson",
     "CY-0051": "CY-0051-Makronisos-Protected-Area.geojson",
     "CY-0052": "CY-0052-Periohi-Kopri-Protected-Area.geojson",
+    // No boundary found yet - CY-0053 Koilada ton Kedron (Cedar Valley) Protected Area
     "CY-0054": "CY-0054-Geomorfomata-Kathika-Protected-Landscape.geojson",
     "CY-0055": "CY-0055-Vrahoi-Inias-Protected-Landscape.geojson",
     "CY-0056": "CY-0056-Androlikou-Kranasi-and-Ambelakia-gorge-Protected-Landscape.geojson",
     "CY-0057": "CY-0057-Avakas-gorge-Protected-Landscape.geojson",
     "CY-0058": "CY-0058-Lythrodontas2-Dam-Protected-Landscape.geojson",
     "CY-0059": "CY-0059-Xyliatos-Dam-Protected-Landscape.geojson",
+    // list of Natura 2000 parks here 0060 to 0099
+    "CY-0100": "CY-0100-Athalassa-Botanical-Garden-Ecological-Site.geojson",
+    "CY-0101": "CY-0101-A-G-Leventis-Troodos-Botanical-Garden-Ecological-Site.geojson",
     "CY-0102": "CY-0102-Akamas-Botanical-Garden-Ecological-Site.geojson",
+    // CY-0103 archeological site
+    // CY-0104 archeological site
+    // CY-0105 world heritage site
+    // No boundary located : CY-0106 Karavopetres Akama Area of Outstanding Natural Beauty
+    // CY-0107 archeological site
+    // CY-0108 archeological site
     "CY-0109": "CY-0109-Kition-Archeological-Reserve.geojson",
+    // CY-0110 archeological site
+    // CY-0111 archeological site
+    // CY-0112 archeological site
+    // CY-0113 archeological site
+    // CY-0114 archeological site
+    // CY-0115 archeological site
+    // CY-0116 archeological site
+    // CY-0117 does not exist (might have been deleted)
+    "CY-0118": "CY-0118-Delikipos-Community-Park.geojson",
     "CY-0119": "CY-0119-Friendship-of-the-Nations-Park.geojson",
     "CY-0120": "CY-0120-Garyllis-Linear-Park.geojson",
     "CY-0121": "CY-0121-Limassol-Municipal-Garden-Park.geojson",
     "CY-0122": "CY-0122-CYTA-Park.geojson",
-    "CY-0125": "CY-0125-Limassol-Molos-Park.geojson",
     "CY-0123": "CY-0123-Melina-Mercury-Park.geojson",
     "CY-0124": "CY-0124-Pano-Polemidia-Park.geojson",
+    "CY-0125": "CY-0125-Limassol-Molos-Park.geojson",
     "CY-0126": "CY-0126-Atlandidos-Park.geojson",
+    "CY-0127": "CY-0127-Acropolis-Park.geojson",
     "CY-0128": "CY-0128-Ayios-Demetrios-Park.geojson",
+    "CY-0129": "CY-0129-Ayios-Loukas-Park.geojson",
+    "CY-0130": "CY-0130-Ayios-Georgios-Park.geojson",
     "CY-0131": "CY-0131-Metochi-Kykkou-Park.geojson",
     "CY-0132": "CY-0132-Poiiton-kai-Pnevmatikon-Park.geojson",
     "CY-0133": "CY-0133-Ioanni-Hadjipavlou-Park.geojson",
+    // CY-0134 to be added
+    // CY-0135 to be added
+    // CY-0136 to be added
+    // CY-0137 to be added
     "CY-0138": "CY-0138-Anthoupolis-Park.geojson",
+    // CY-0139 to be added
+    // CY-0140 to be added
+    // CY-0141 to be added
+    // CY-0142 to be added
     "CY-0143": "CY-0143-Nicosia-Municipal-Garden-Park.geojson",
     "CY-0144": "CY-0144-Pyla-Beach-Park.geojson",
     "CY-0145": "CY-0145-Larnaka-Municipal-Garden-Park.geojson",
     "CY-0146": "CY-0146-Patyxeio-Park.geojson",
+    "CY-0147": "CY-0147-Lympia-Community-Park.geojson",
+    // CY-0148 does not exist (might have been deleted)
     "CY-0149": "CY-0149-Michalaki-Kousoulidi-Community-Park.geojson",
     "CY-0150": "CY-0150-Deftera-Community-Park.geojson",
     "CY-0151": "CY-0151-Andreas-Christou-Community-Park.geojson",
+    // CY-0152 to be added
+    // CY-0153 does not exist (might have been deleted)
+    // CY-0154 does not exist (might have been deleted)
+    // CY-0155 does not exist (might have been deleted)
+    // CY-0156 does not exist (might have been deleted)
+    // CY-0157 does not exist (might have been deleted)
+    // CY-0158 does not exist (might have been deleted)
+    // CY-0159 does not exist (might have been deleted)
+    // CY-0160 does not exist (might have been deleted)
+    // CY-0161 does not exist (might have been deleted)
+    // CY-0162 does not exist (might have been deleted)
+    // CY-0163 does not exist (might have been deleted)
+    // CY-0164 does not exist (might have been deleted)
     "CY-0165": "CY-0165-Pikni-Forest-Reserve.geojson",
+    // CY-0166 Potima Bay Coastal Park
+    // CY-0167 does not exist (might have been deleted)
+    // CY-0168 does not exist (might have been deleted)
     "CY-0169": "CY-0169-Sotira-Forest-National-Park.geojson"
 };
 
@@ -177,6 +237,7 @@ const potaTrails = {
 // NATURA 2000 //
 /////////////////
 const naturaMap = {
+    "CY-0037": { code: "CY6000002", layer: 1, name: "Larnaca Saltwater Lake Wetland Reserve" },
     "CY-0039": { code: "CY3000002", layer: 1, name: "Cape Gkreko SPA Natura 2000" },
     "CY-0060": { code: "CY4000010", layer: 0, name: "Akamas Peninsula Natura 2000" },
     "CY-0061": { code: "CY2000006", layer: 1, name: "Paphos Forest Natura 2000" },
@@ -211,13 +272,13 @@ const naturaMap = {
     "CY-0090": { code: "CY3000009", layer: 1, name: "Agias Theklas - Liopetri Area Natura 2000" },
     "CY-0091": { code: "CY4000001", layer: 0, name: "Polis - Gialia Area Natura 2000" },
     "CY-0092": { code: "CY4000005", layer: 0, name: "Episkopi Morou Nerou Natura 2000" },
+    // CY-0093 does not exist (might have been deleted)
     "CY-0094": { code: "CY4000009", layer: 0, name: "Skoulli Area Natura 2000" },
-    "CY-0095": { code: "CY4000015", layer: 0, name: "Kritou Marottou Area Natura 2000" },
+    "CY-0095": { code: "CY4000015", layer: 1, name: "Kritou Marottou Area Natura 2000" },
     "CY-0096": { code: "CY5000007", layer: 0, name: "Asgata Area Natura 2000" },
     "CY-0097": { code: "CY6000003", layer: 0, name: "Periochi Lympion - Agias Annas Natura 2000" },
     "CY-0098": { code: "CY6000004", layer: 0, name: "Stavrovouni Forest Natura 2000" },
-    "CY-0099": { code: "CY6000005", layer: 0, name: "Lefkara Area Natura 2000" },
-    "CY-0037": { code: "CY6000002", layer: 1, name: "Larnaca Saltwater Lake Wetland Reserve" }
+    "CY-0099": { code: "CY6000005", layer: 0, name: "Lefkara Area Natura 2000" }
 };
 
 ///////////
@@ -1271,8 +1332,8 @@ legend.onAdd = function (map) {
                 <!-- Section: Credits -->
                 <div class="legend-section-title">Credits</div>
                     Creator: M1GRY with CoPilot<br>
-                    Updated: 04-Sep-2026<br>
-                    Version: V16.4<br><br>
+                    Updated: 25-Oct-2026<br>
+                    Version: V17.3<br><br>
 
                 <!-- Section: POTA Categories -->
                 <div class="legend-section-title">POTA Categories</div>
@@ -1282,7 +1343,6 @@ legend.onAdd = function (map) {
                     <i style="background: ${COLOUR_NATIONAL_FOREST}"></i> National Forest<br>
                     <i style="background: ${COLOUR_ARCHEOLOGICAL}"></i> Archeological Reserve<br>
                     <i style="background: ${COLOUR_DEFAULT}"></i> Other<br>
-                    <i style="background: ${COLOUR_ILLEGAL}"></i> Illegal<br>
             </div>
             <div id="legend-header">
                 <span id="legend-triangle">&#9650;</span>
