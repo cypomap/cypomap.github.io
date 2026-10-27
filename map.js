@@ -6,6 +6,8 @@
 // V14.0 - 02-Sep-2026
 // V15.0 - 03-Sep-2026
 // V16.0 - 04-Sep-2026
+// V17.0 - 25-Oct-2026
+// V18.0 - 26-Oct-2026
 
 //////////////////////
 // CONSTANTS & DATA //
@@ -346,6 +348,12 @@ const map = L.map('map', {
     minZoom: 8,
     maxZoom: 17
 }).setView([35.0, 33.0], 9);
+
+L.control.scale({
+    position: 'bottomleft',
+    metric: true,
+    imperial: true
+}).addTo(map);
 
 // Pane for highlighted trails
 map.createPane("highlightPane");
@@ -958,6 +966,8 @@ function potaRefreshMarkers() {
             line5 = `Activations : ${park.activations}`;
         }
 
+        // <button onclick="deleteActivated('${park.reference}')">Remove Activation</button>
+        // <button onclick="markActivated('${park.reference}')">Mark as Activated</button>
         const popupHtml = `
             <div class="popup-content">
                 <b>${park.reference}</b><br>
@@ -966,23 +976,24 @@ function potaRefreshMarkers() {
                 Region : ${regionName}<br>
                 ${line5}<br><br>
         
-                ${
-                    isIllegal
-                    ? ""   // illegal ? no activation or google buttons
-                    : `
-                        <div style="display:flex; gap:10px; align-items:center;">
-                            ${
-                                isActivated
-                                ? `<button onclick="deleteActivated('${park.reference}')">Remove Activation</button>`
-                                : `<button onclick="markActivated('${park.reference}')">Mark as Activated</button>`
-                            }
-        
-                            <button onclick="window.open('https://www.google.com/maps?q=${lat},${lon}', '_blank')">
-                                goto Google Maps
-                            </button>
-                        </div>
-                    `
-                }
+                <div style="display:flex; align-items:center; gap:20px;">
+
+                    ${
+                        isActivated
+                        ? `<img src="images/deactivated.png" width="28" height="28" style="cursor:pointer;" onclick="deleteActivated('${park.reference}')">`
+                        : `<img src="images/activated.png"   width="28" height="28" style="cursor:pointer;" onclick="markActivated('${park.reference}')">`
+                    }
+
+                    <img src="images/goto-google-maps.png"
+                         width="28" height="28"
+                         style="cursor:pointer;"
+                         onclick="gotoGoogleMaps(${lat}, ${lon})">
+                
+                    <img src="images/custom-cancel.jpg"
+                         width="28" height="28"
+                         style="cursor:pointer; margin-left:auto;"
+                         onclick="map.closePopup()">
+                </div>
         
             </div>
         `;
@@ -1128,9 +1139,10 @@ async function picnicSitesLoadMarkers() {
                     <div><strong>Altitude:</strong> ${props.altitude} m</div>
                     <div><strong>Capacity:</strong> ${props.capacity}</div>
                     <div>
-                        <a href="https://www.google.com/maps?q=${lat},${lon}" target="_blank">
-                            goto Google Maps
-                        </a>
+                    <img src="images/goto-google-maps.png"
+                        width="28" height="28"
+                        style="cursor:pointer;"
+                        onclick="window.open('https://www.google.com/maps?q=${lat},${lon}', '_blank')">
                     </div>
                 </div>
             `;
@@ -1159,9 +1171,12 @@ function mcdLoadMarkers() {
         const popupHtml = `
             <b>${loc.name}</b><br>
             ${loc.address}<br>
-            <a href="https://www.google.com/maps?q=${loc.lat},${loc.lon}" target="_blank">
-                goto Google Maps
-            </a>
+            <div>
+            <img src="images/goto-google-maps.png"
+                width="28" height="28"
+                style="cursor:pointer;"
+                onclick="window.open('https://www.google.com/maps?q=${loc.lat},${loc.lon}', '_blank')">
+            </div>
         `;
 
         marker.bindPopup(popupHtml);
@@ -1332,8 +1347,8 @@ legend.onAdd = function (map) {
                 <!-- Section: Credits -->
                 <div class="legend-section-title">Credits</div>
                     Creator: M1GRY with CoPilot<br>
-                    Updated: 25-Oct-2026<br>
-                    Version: V17.3<br><br>
+                    Updated: 26-Oct-2026<br>
+                    Version: V18.0<br><br>
 
                 <!-- Section: POTA Categories -->
                 <div class="legend-section-title">POTA Categories</div>
@@ -1549,9 +1564,10 @@ function addCustomPin(lat, lon, type) {
 
             <div style="display:flex; align-items:center; gap:20px;">
 
-                <button onclick="window.open('https://www.google.com/maps?q=${lat},${lon}', '_blank')">
-                    goto Google Maps
-                </button>
+                <img src="images/goto-google-maps.png"
+                     width="28" height="28"
+                     style="cursor:pointer;"
+                     onclick="gotoGoogleMaps(${lat}, ${lon})">
 
                 <img src="images/custom-remove.jpg"
                      width="28" height="28"
@@ -1646,7 +1662,6 @@ map.on('click', function(e) {
                          width="28" height="28"
                          style="cursor:pointer;"
                          onclick="addCustomPin(${lat}, ${lon}, 'parking')">
-
 
                     <!-- Spacer icon (knives & forks or anything you like) -->
                     <img src="images/custom-food.jpg"
