@@ -8,6 +8,7 @@
 // V16.0 - 04-Sep-2026
 // V17.0 - 25-Oct-2026
 // V18.0 - 26-Oct-2026
+// V19.0 - 28-Oct-2026
 
 //////////////////////
 // CONSTANTS & DATA //
@@ -1343,8 +1344,8 @@ legend.onAdd = function (map) {
                 <!-- Section: Credits -->
                 <div class="legend-section-title">Credits</div>
                     Creator: M1GRY with CoPilot<br>
-                    Updated: 26-Oct-2026<br>
-                    Version: V18.0<br><br>
+                    Updated: 28-Oct-2026<br>
+                    Version: V19.0<br><br>
 
                 <!-- Section: POTA Categories -->
                 <div class="legend-section-title">POTA Categories</div>
