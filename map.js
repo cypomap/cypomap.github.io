@@ -238,49 +238,48 @@ const potaTrails = {
 /////////////////
 // NATURA 2000 //
 /////////////////
-const naturaMap = {
-    "CY-0037": { code: "CY6000002", layer: 1, name: "Larnaca Saltwater Lake Wetland Reserve" },
-    "CY-0039": { code: "CY3000002", layer: 1, name: "Cape Gkreko SPA Natura 2000" },
-    "CY-0060": { code: "CY4000010", layer: 0, name: "Akamas Peninsula Natura 2000" },
-    "CY-0061": { code: "CY2000006", layer: 1, name: "Paphos Forest Natura 2000" },
-    "CY-0062": { code: "CY2000013", layer: 1, name: "Periohi Kionia Natura 2000" },
-    "CY-0063": { code: "CY6000010", layer: 1, name: "Oroklini Lake Natura 2000" },
-    "CY-0064": { code: "CY3000008", layer: 0, name: "Paralimni Lake Natura 2000" },
-    "CY-0065": { code: "CY3000007", layer: 1, name: "Achna Dam Natura 2000" },
-    "CY-0066": { code: "CY4000004", layer: 1, name: "Vouni Panagias Natura 2000" },
-    "CY-0067": { code: "CY4000013", layer: 1, name: "Kato Pafos Lighthouse Natura 2000" },
-    "CY-0068": { code: "CY4000017", layer: 1, name: "Kremmoi Chanoutari (Chanoutari Cliffs) Natura 2000" },
-    "CY-0069": { code: "CY4000022", layer: 1, name: "Kremmoi Ezousas Natura 2000" },
-    "CY-0070": { code: "CY4000019", layer: 1, name: "Koilada Sarama Natura 2000" },
-    "CY-0071": { code: "CY4000020", layer: 1, name: "Koilada Diarizou Natura 2000" },
-    "CY-0072": { code: "CY4000021", layer: 1, name: "Koilada Ezousas Natura 2000" },
-    "CY-0073": { code: "CY5000011", layer: 1, name: "Koilada Limnati Natura 2000" },
-    "CY-0074": { code: "CY5000008", layer: 1, name: "Koilada Xylourikou Natura 2000" },
-    "CY-0075": { code: "CY5000009", layer: 1, name: "Potamos Paramaliou Natura 2000" },
-    "CY-0076": { code: "CY6000008", layer: 1, name: "Potamos Pentaschinos Natura 2000" },
-    "CY-0077": { code: "CY6000007", layer: 1, name: "Potamos Panagias Stazousas Natura 2000" },
-    "CY-0078": { code: "CY4000018", layer: 1, name: "Ezousa River Estuary Natura 2000" },
-    "CY-0079": { code: "CY4000018", layer: 1, name: "Xeropotamos and Diarizos Estuary Natura 2000" },
-    "CY-0080": { code: "CY5000010", layer: 1, name: "Cha - Potami Area Natura 2000" },
-    "CY-0081": { code: "CY6000009", layer: 1, name: "Kosii - Pallourokampou Area Natura 2000" },
-    "CY-0082": { code: "CY2000014", layer: 1, name: "Atsas - Agios Theodoros Area Natura 2000" },
-    "CY-0083": { code: "CY4000016", layer: 1, name: "Agias Aiakterinis - Agias Paraskevis Canyons Natura 2000" },
-    "CY-0084": { code: "CY2000002", layer: 0, name: "Alykos Potamos Natura 2000" },
-    "CY-0085": { code: "CY2000003", layer: 0, name: "Periochi Mitserou - Agrokipias Natura 2000" },
-    "CY-0086": { code: "CY2000009", layer: 0, name: "Fountoukodasi Pitsilias Natura 2000" },
-    "CY-0087": { code: "CY2000010", layer: 0, name: "Koilada Potamou Maroullenas Natura 2000" },
-    "CY-0088": { code: "CY2000011", layer: 0, name: "Potamos Peristerona Natura 2000" },
-    "CY-0089": { code: "CY2000012", layer: 0, name: "Kargoti Valley Natura 2000" },
-    "CY-0090": { code: "CY3000009", layer: 1, name: "Agias Theklas - Liopetri Area Natura 2000" },
-    "CY-0091": { code: "CY4000001", layer: 0, name: "Polis - Gialia Area Natura 2000" },
-    "CY-0092": { code: "CY4000005", layer: 0, name: "Episkopi Morou Nerou Natura 2000" },
-    // CY-0093 does not exist (might have been deleted)
-    "CY-0094": { code: "CY4000009", layer: 0, name: "Skoulli Area Natura 2000" },
-    "CY-0095": { code: "CY4000015", layer: 1, name: "Kritou Marottou Area Natura 2000" },
-    "CY-0096": { code: "CY5000007", layer: 0, name: "Asgata Area Natura 2000" },
-    "CY-0097": { code: "CY6000003", layer: 0, name: "Periochi Lympion - Agias Annas Natura 2000" },
-    "CY-0098": { code: "CY6000004", layer: 0, name: "Stavrovouni Forest Natura 2000" },
-    "CY-0099": { code: "CY6000005", layer: 0, name: "Lefkara Area Natura 2000" }
+const naturaGeoJsonFiles = {
+    "CY-0037": { name: "CY-0037-Larnaca-Saltwater-Lake-Wetland-Reserve.geojson" },
+    "CY-0039": { name: "CY-0039-Cape-Gkreko-SPA-Natura-2000.geojson" },
+    "CY-0060": { name: "CY-0060-Akamas-Peninsula-Natura-2000.geojson" },
+    "CY-0061": { name: "CY-0061-Paphos-Forest-Natura-2000.geojson" },
+    "CY-0062": { name: "CY-0062-Periohi-Kionia-Natura-2000.geojson" },
+    "CY-0063": { name: "CY-0063-Oroklini-Lake-Natura-2000.geojson" },
+    "CY-0064": { name: "CY-0064-Paralimni-Lake-Natura-2000.geojson" },
+    "CY-0065": { name: "CY-0065-Achna-Dam-Natura-2000.geojson" },
+    "CY-0066": { name: "CY-0066-Vouni-Panagias-Natura-2000.geojson" },
+    "CY-0067": { name: "CY-0067-Kato-Pafos-Lighthouse-Natura-2000.geojson" },
+    "CY-0068": { name: "CY-0068-Kremmoi-Chanoutari-Chanoutari-Cliffs-Natura-2000.geojson" },
+    "CY-0069": { name: "CY-0069-Kremmoi-Ezousas-Natura-2000.geojson" },
+    "CY-0070": { name: "CY-0070-Koilada-Sarama-Natura-2000.geojson" },
+    "CY-0071": { name: "CY-0071-Koilada-Diarizou-Natura-2000.geojson" },
+    "CY-0072": { name: "CY-0072-Koilada-Ezousas-Natura-2000.geojson" },
+    "CY-0073": { name: "CY-0073-Koilada-Limnati-Natura-2000.geojson" },
+    "CY-0074": { name: "CY-0074-Koilada-Xylourikou-Natura-2000.geojson" },
+    "CY-0075": { name: "CY-0075-Potamos-Paramaliou-Natura-2000.geojson" },
+    "CY-0076": { name: "CY-0076-Potamos-Pentaschinos-Natura-2000.geojson" },
+    "CY-0077": { name: "CY-0077-Potamos-Panagias-Stazousas-Natura-2000.geojson" },
+    "CY-0078": { name: "CY-0078-Ezousa-River-Estuary-Natura-2000.geojson" },
+    "CY-0079": { name: "CY-0079-Xeropotamos-and-Diarizos-Estuary-Natura-2000.geojson" },
+    "CY-0080": { name: "CY-0080-Cha---Potami-Area-Natura-2000.geojson" },
+    "CY-0081": { name: "CY-0081-Kosii---Pallourokampou-Area-Natura-2000.geojson" },
+    "CY-0082": { name: "CY-0082-Atsas---Agios-Theodoros-Area-Natura-2000.geojson" },
+    "CY-0083": { name: "CY-0083-Agias-Aiakterinis---Agias-Paraskevis-Canyons-Natura-2000.geojson" },
+    "CY-0084": { name: "CY-0084-Alykos-Potamos-Natura-2000.geojson" },
+    "CY-0085": { name: "CY-0085-Periochi-Mitserou---Agrokipias-Natura-2000.geojson" },
+    "CY-0086": { name: "CY-0086-Fountoukodasi-Pitsilias-Natura-2000.geojson" },
+    "CY-0087": { name: "CY-0087-Koilada-Potamou-Maroullenas-Natura-2000.geojson" },
+    "CY-0088": { name: "CY-0088-Potamos-Peristerona-Natura-2000.geojson" },
+    "CY-0089": { name: "CY-0089-Kargoti-Valley-Natura-2000.geojson" },
+    "CY-0090": { name: "CY-0090-Agias-Theklas---Liopetri-Area-Natura-2000.geojson" },
+    "CY-0091": { name: "CY-0091-Polis---Gialia-Area-Natura-2000.geojson" },
+    "CY-0092": { name: "CY-0092-Episkopi-Morou-Nerou-Natura-2000.geojson" },
+    "CY-0094": { name: "CY-0094-Skoulli-Area-Natura-2000.geojson" },
+    "CY-0095": { name: "CY-0095-Kritou-Marottou-Area-Natura-2000.geojson" },
+    "CY-0096": { name: "CY-0096-Asgata-Area-Natura-2000.geojson" },
+    "CY-0097": { name: "CY-0097-Periochi-Lympion---Agias-Annas-Natura-2000.geojson" },
+    "CY-0098": { name: "CY-0098-Stavrovouni-Forest-Natura-2000.geojson" },
+    "CY-0099": { name: "CY-0099-Lefkara-Area-Natura-2000.geojson" }
 };
 
 ///////////
@@ -716,7 +715,7 @@ function potaChooseColour(park) {
 
     if (park.qsos === 0 && highlightATNO) return COLOUR_ATNO;
 
-    if (naturaMap[park.reference]) return COLOUR_NATURA;
+    if (naturaGeoJsonFiles[park.reference]) return COLOUR_NATURA;
 
     if (park.name.includes("Archeological"))   return COLOUR_ARCHEOLOGICAL;
     if (park.name.includes("Scenic Trail"))    return COLOUR_SCENIC_TRAIL;
@@ -823,6 +822,7 @@ function highlightTrail(park) {
         park._trailLayer.bringToFront();
         activeTrail = park;
     }
+
 }
 
 function loadAllPotaTrails() {
@@ -841,7 +841,7 @@ function loadAllPotaTrails() {
         }
 
         const colour = COLOUR_SCENIC_TRAIL;
-        const url = `./geojson/POTA/${file}`;
+        const url = `./geojson/POTA/TRAILS/${file}`;
 
         console.log("POTA: Fetching trail", potaCode, "from", url);
 
@@ -966,8 +966,8 @@ function potaRefreshMarkers() {
             line5 = `Activations : ${park.activations}`;
         }
 
-        // <button onclick="deleteActivated('${park.reference}')">Remove Activation</button>
-        // <button onclick="markActivated('${park.reference}')">Mark as Activated</button>
+                // <div style="display:flex; align-items:center; gap:20px;">
+                         //style="cursor:pointer; margin-left:auto;"
         const popupHtml = `
             <div class="popup-content">
                 <b>${park.reference}</b><br>
@@ -976,7 +976,7 @@ function potaRefreshMarkers() {
                 Region : ${regionName}<br>
                 ${line5}<br><br>
         
-                <div style="display:flex; align-items:center; gap:20px;">
+                <div style="display:flex; justify-content:space-evenly; align-items:center;">
 
                     ${
                         isActivated
@@ -991,7 +991,7 @@ function potaRefreshMarkers() {
                 
                     <img src="images/custom-cancel.jpg"
                          width="28" height="28"
-                         style="cursor:pointer; margin-left:auto;"
+                         style="cursor:pointer;"
                          onclick="map.closePopup()">
                 </div>
         
@@ -1006,11 +1006,11 @@ function potaRefreshMarkers() {
         park._marker.on('click', (e) => {
             L.DomEvent.stopPropagation(e);   // prevent map click
             potaHandleClick(park);           // your existing logic
-            highlightTrail(park);            // highlight if trail exists
+            //highlightTrail(park);            // highlight if trail exists
         });
         
 
-        marker.on("click", () => potaHandleClick(park));
+        //marker.on("click", () => potaHandleClick(park));
     });
 }
 
@@ -1018,7 +1018,7 @@ function potaRefreshMarkers() {
 function potaHandleClick(park) {
 
     // Natura 2000 highlight (exclusive)
-    if (naturaMap[park.reference]) {
+    if (naturaGeoJsonFiles[park.reference]) {
         clearNatura2000Highlight();
         highlightNatura2000Boundary(park.reference);
     } else {
@@ -1052,18 +1052,13 @@ function clearNatura2000Highlight() {
 }
 
 function highlightNatura2000Boundary(potaCode) {
-    const entry = naturaMap[potaCode];
-    if (!entry || !entry.code || entry.layer === null) {
+    const entry = naturaGeoJsonFiles[potaCode];
+    if (!entry || !entry.name) {
         console.warn("No Natura 2000 mapping for", potaCode);
         return;
     }
 
-    const url =
-        "https://bio.discomap.eea.europa.eu/arcgis/rest/services/ProtectedSites/Natura2000Sites/MapServer/" +
-        entry.layer +
-        "/query?where=sitecode='" +
-        entry.code +
-        "'&outFields=*&returnGeometry=true&f=geojson";
+    const url = `geojson/POTA/NATURA-2000/${entry.name}`;
 
     fetch(url)
         .then(r => r.json())
@@ -1085,19 +1080,20 @@ function highlightNatura2000Boundary(potaCode) {
 }
 
 function loadAllNaturaBoundaries() {
-    for (const potaCode in naturaMap) {
-        const entry = naturaMap[potaCode];
-        if (!entry || !entry.code || entry.layer === null) continue;
 
-        const url =
-            "https://bio.discomap.eea.europa.eu/arcgis/rest/services/ProtectedSites/Natura2000Sites/MapServer/" +
-            entry.layer +
-            "/query?where=sitecode='" +
-            entry.code +
-            "'&outFields=*&returnGeometry=true&f=geojson";
+    for (const potaCode in naturaGeoJsonFiles) {
+        const entry = naturaGeoJsonFiles[potaCode];
+        if (!entry || !entry.name) continue;
+
+        const url = `geojson/POTA/NATURA-2000/${entry.name}`;
+        console.log("Loading Natura boundary:", entry.name);
+        
 
         fetch(url)
-            .then(r => r.json())
+            .then(r => {
+                if (!r.ok) throw new Error(`HTTP ${r.status}`);
+                return r.json();
+            })
             .then(data => {
                 L.geoJSON(data, {
                     style: {
